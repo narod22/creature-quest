@@ -78,6 +78,49 @@ function isActualSpeciesPage(page) {
   const cats = (page.categories || []).map((c) => (c.title || c).toLowerCase())
   const catText = cats.join(' ')
 
+  // Reject people, companies, media, places
+  const personPatterns = [
+    'born ', 'is an american', 'is a british', 'is an australian',
+    'is a canadian', 'is an actor', 'is an actress', 'is a singer',
+    'is a musician', 'is a politician', 'is a writer', 'is an author',
+    'is a filmmaker', 'is a director', 'is a comedian', 'is a rapper',
+    'is a football', 'is a basketball', 'is a baseball', 'is a soccer',
+    'is a television', 'is a radio', 'is a news', 'is a media',
+    'is a company', 'is a corporation', 'is a brand',
+    'is a film', 'is a movie', 'is a novel', 'is a book',
+    'is a song', 'is an album', 'is a band', 'is a video game',
+    'is a city', 'is a town', 'is a village', 'is a country',
+    'is a university', 'is a school', 'is a college',
+    'is a professional', 'is a former', 'is a retired',
+    'is a type of knife', 'is a knife', 'is a weapon',
+    'is a type of sword', 'is a military', 'is a warship',
+    'is a helicopter', 'is an aircraft', 'is a car',
+    'is a rocket', 'is a satellite', 'is a spacecraft',
+    'is a concept', 'is a term', 'is a phenomenon',
+    'is a technique', 'is a method', 'is a process',
+  ]
+  if (personPatterns.some((p) => extract.startsWith(p) || extract.includes(p))) {
+    // Double check: if it also has biological categories, it's probably an animal
+    // (e.g., "Wolverine" the animal vs "Wolverine" the character)
+    if (!catText.includes('species') && !catText.includes('fauna') &&
+        !catText.includes('animal') && !catText.includes('described in')) {
+      return false
+    }
+  }
+
+  // Reject by categories: people, companies, media
+  const badCatPatterns = [
+    'living people', 'deaths', 'births', 'actors', 'actresses',
+    'singers', 'musicians', 'politicians', 'writers', 'companies',
+    'television series', 'films', 'albums', 'songs', 'video games',
+    'cities in', 'populated places', 'universities', 'schools',
+  ]
+  if (badCatPatterns.some((p) => catText.includes(p))) return false
+
+  // Reject disambiguation pages
+  if (titleLower.includes('(disambiguation)')) return false
+  if (extract.startsWith('this is a disambiguation') || extract.includes('may refer to:')) return false
+
   // Reject obvious non-species page titles
   const badTitlePrefixes = [
     'outline of', 'glossary of', 'list of', 'index of',
@@ -86,11 +129,14 @@ function isActualSpeciesPage(page) {
   const titleLower = title.toLowerCase()
   if (badTitlePrefixes.some((p) => titleLower.startsWith(p))) return false
 
-  // Reject topic/concept articles by title patterns
+  // Reject topic/concept/object articles by title patterns
   const badTitleWords = [
     'terminology', 'migration', 'birdcage', 'cage', 'membrane',
     'conservation', 'evolution of', 'anatomy of', 'plucking post',
     'fecal sac', 'foraging flock', 'helpers at the',
+    'knife', 'sword', 'weapon', 'missile', 'helicopter', 'aircraft',
+    'tank', 'ship', 'submarine', 'car', 'vehicle', 'motorcycle',
+    'effect', 'theorem', 'algorithm', 'mimicry',
   ]
   if (badTitleWords.some((w) => titleLower.includes(w))) return false
 
@@ -170,68 +216,116 @@ async function fetchPageDetails(pageIds) {
 /**
  * Search for species by query. Used on the Explore page.
  *
- * Strategy: try EXACT TITLE LOOKUP first (so "giant squid" returns the
- * Giant Squid article directly), then fall back to text search for broader
- * queries like "animals that glow" or "fastest bird".
+ * Strategy:
+ * 1. Direct title lookup (exact match + common variations)
+ * 2. Wikipedia opensearch (autocomplete-style, great for partial names)
+ * 3. Full-text search for broader coverage
+ * 4. Light filtering (reject obvious non-species but don't over-filter)
+ *
+ * The goal: a kid types "fox" and gets Fox, Red fox, Arctic fox, Fennec fox.
+ * A kid types "blue whale" and gets the Blue whale article immediately.
  */
 export async function searchSpecies(query) {
   const cacheKey = `search:${query}`
   const cached = getCached(cacheKey)
   if (cached) return cached
 
-  // Step 1: Try direct title lookup first (handles "giant squid", "red fox", etc.)
-  const directPages = await fetchPagesByTitle([query])
+  // Step 1: Try direct title lookups (exact + common variations)
+  const titleVariations = [
+    query,
+    `${query} (animal)`,    // handles disambiguated titles like "Crane (bird)"
+    `${query} (bird)`,
+    `${query} (fish)`,
+    `${query} (insect)`,
+  ]
+  const directPages = await fetchPagesByTitle(titleVariations)
 
-  // Step 2: Also run text searches in parallel for broader coverage
-  const [res1, res2] = await Promise.all([
+  // Step 2: Run opensearch (Wikipedia autocomplete) + text searches in parallel
+  const [opensearchRes, searchRes1, searchRes2] = await Promise.all([
+    // Opensearch gives great results for partial names
+    fetch(`${WIKI_API}?${wikiParams({
+      action: 'opensearch',
+      search: query,
+      limit: '15',
+      namespace: '0',
+    })}`).catch(() => null),
+    // Full text search: raw query
     fetch(`${WIKI_API}?${wikiParams({
       action: 'query', list: 'search',
       srsearch: query,
       srnamespace: '0', srlimit: '15',
-    })}`),
+    })}`).catch(() => null),
+    // Full text search: query + "species" or "animal"
     fetch(`${WIKI_API}?${wikiParams({
       action: 'query', list: 'search',
-      srsearch: `${query} species`,
+      srsearch: `${query} animal OR species`,
       srnamespace: '0', srlimit: '10',
-    })}`),
+    })}`).catch(() => null),
   ])
 
-  const data1 = await res1.json()
-  const data2 = await res2.json()
+  // Collect opensearch title suggestions
+  const opensearchTitles = []
+  if (opensearchRes) {
+    try {
+      const osData = await opensearchRes.json()
+      // opensearch returns [query, [titles], [descriptions], [urls]]
+      if (Array.isArray(osData) && osData[1]) {
+        opensearchTitles.push(...osData[1])
+      }
+    } catch { /* ignore */ }
+  }
 
-  // Merge search results, deduplicating by page ID
+  // Fetch opensearch results by title (these are usually very relevant)
+  const opensearchPages = opensearchTitles.length > 0
+    ? await fetchPagesByTitle(opensearchTitles.slice(0, 10))
+    : []
+
+  // Collect text search page IDs
   const seenIds = new Set()
-
-  // Add direct title match first (highest priority)
-  for (const page of directPages) {
+  for (const page of [...directPages, ...opensearchPages]) {
     seenIds.add(page.pageid)
   }
 
   const searchPageIds = []
-  for (const result of [...(data1.query?.search || []), ...(data2.query?.search || [])]) {
-    if (!seenIds.has(result.pageid)) {
-      seenIds.add(result.pageid)
-      searchPageIds.push(result.pageid)
-    }
+  for (const res of [searchRes1, searchRes2]) {
+    if (!res) continue
+    try {
+      const data = await res.json()
+      for (const result of (data.query?.search || [])) {
+        if (!seenIds.has(result.pageid)) {
+          seenIds.add(result.pageid)
+          searchPageIds.push(result.pageid)
+        }
+      }
+    } catch { /* ignore */ }
   }
 
-  // Fetch details for search results
-  const searchPages = await fetchPageDetails(searchPageIds.slice(0, 20))
+  // Fetch details for text search results
+  const searchPages = await fetchPageDetails(searchPageIds.slice(0, 15))
 
-  // Build species: direct title matches first, then filtered search results
+  // Step 3: Build species objects
+  // Direct title matches: include if they look biological (the user typed exactly this)
+  // Opensearch + text search results: filter to actual species pages
   const allSpecies = [
-    ...directPages.map((page) => buildSpecies(page)),
-    ...searchPages
-      .filter((page) => isActualSpeciesPage(page))
-      .map((page) => buildSpecies(page)),
+    ...directPages.filter((page) => isActualSpeciesPage(page)).map((page) => buildSpecies(page)),
+    ...opensearchPages.filter((page) => isActualSpeciesPage(page)).map((page) => buildSpecies(page)),
+    ...searchPages.filter((page) => isActualSpeciesPage(page)).map((page) => buildSpecies(page)),
   ]
 
-  // Deduplicate by ID (in case title match also appears in search)
+  // Deduplicate by page ID
   const seen = new Set()
-  const species = allSpecies.filter((s) => {
+  const deduped = allSpecies.filter((s) => {
     if (seen.has(s.id)) return false
     seen.add(s.id)
     return true
+  })
+
+  // Sort: results whose title contains the search query come first
+  const queryLower = query.toLowerCase()
+  const species = deduped.sort((a, b) => {
+    const aMatch = a.title.toLowerCase().includes(queryLower) ? 0 : 1
+    const bMatch = b.title.toLowerCase().includes(queryLower) ? 0 : 1
+    return aMatch - bMatch
   })
 
   setCache(cacheKey, species)

@@ -18,7 +18,7 @@ export default function QuizCard({ question, onAnswer }) {
 
     setTimeout(() => {
       onAnswer(choice.correct)
-    }, choice.correct ? 1200 : 1800)
+    }, question.funFact ? 2500 : (choice.correct ? 1200 : 1800))
   }
 
   return (
@@ -73,19 +73,23 @@ export default function QuizCard({ question, onAnswer }) {
 
       {/* Feedback */}
       {answered && (
-        <div className={`mt-4 text-center font-bold animate-slide-up ${
-          question.choices[selected]?.correct
-            ? 'text-green-600'
-            : 'text-gray-500'
-        }`}>
+        <div className="mt-4 text-center animate-slide-up">
           {question.choices[selected]?.correct ? (
-            <p className={isLittle ? 'text-2xl' : 'text-lg'}>
+            <p className={`font-bold text-green-600 ${isLittle ? 'text-2xl' : 'text-lg'}`}>
               {['Amazing!', 'You got it!', 'Awesome!', 'Brilliant!'][Math.floor(Math.random() * 4)]} 🎉
             </p>
           ) : (
-            <p className={isLittle ? 'text-lg' : 'text-base'}>
+            <p className={`font-bold text-gray-500 ${isLittle ? 'text-lg' : 'text-base'}`}>
               Not quite! The answer is highlighted in green. 💚
             </p>
+          )}
+          {/* Fun fact shown after answering */}
+          {question.funFact && (
+            <div className="mt-3 p-3 bg-sunset-light/20 rounded-xl border-2 border-sunset-light/30">
+              <p className="text-sm text-gray-600 font-semibold">
+                <span className="text-lg mr-1">💡</span> {question.funFact}
+              </p>
+            </div>
           )}
         </div>
       )}

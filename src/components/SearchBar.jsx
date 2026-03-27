@@ -1,16 +1,18 @@
 import { useState } from 'react'
 
 const SUGGESTIONS = [
-  'dinosaur',
-  'deep sea fish',
-  'colorful frog',
-  'giant spider',
-  'new butterfly species',
-  'cave animal',
-  'glowing jellyfish',
-  'tiny lizard',
-  'prehistoric shark',
-  'arctic fox',
+  'new dinosaur fossil',
+  'new deep sea species',
+  'new frog discovered',
+  'new spider species',
+  'new butterfly discovered',
+  'cave species discovered',
+  'new jellyfish species',
+  'new tiny lizard found',
+  'prehistoric shark fossil',
+  'new species 2025',
+  'extinct animal discovered',
+  'new beetle species',
 ]
 
 export default function SearchBar({ onSearch }) {

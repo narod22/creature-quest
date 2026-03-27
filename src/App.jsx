@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 import SearchBar from './components/SearchBar'
 import AnimalCard from './components/AnimalCard'
+import DiscoveryCard from './components/DiscoveryCard'
 import AnimalDetail from './components/AnimalDetail'
 import FunHeader from './components/FunHeader'
 import CategoryButtons from './components/CategoryButtons'
 import LoadingAnimation from './components/LoadingAnimation'
-import { searchSpecies, getRecentDiscoveries, searchNewSpecies } from './api'
+import {
+  searchSpecies,
+  loadDiscoveryFeed,
+  searchNewDiscoveries,
+  getTypeEmoji,
+} from './api'
 
 function App() {
   const [results, setResults] = useState([])
@@ -13,19 +19,20 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
-  const [recentAnimals, setRecentAnimals] = useState([])
+  const [discoveries, setDiscoveries] = useState([])
+  const [discoveryYear, setDiscoveryYear] = useState(new Date().getFullYear())
 
   useEffect(() => {
-    loadRecentDiscoveries()
+    loadDiscoveries()
   }, [])
 
-  async function loadRecentDiscoveries() {
+  async function loadDiscoveries() {
     setLoading(true)
     try {
-      const animals = await getRecentDiscoveries()
-      setRecentAnimals(animals)
+      const species = await loadDiscoveryFeed()
+      setDiscoveries(species)
     } catch (e) {
-      console.error('Failed to load recent discoveries:', e)
+      console.error('Failed to load discoveries:', e)
     }
     setLoading(false)
   }
@@ -37,8 +44,14 @@ function App() {
     setSearchTerm(query)
     setSelectedAnimal(null)
     try {
-      const data = await searchSpecies(query)
-      setResults(data)
+      // Search for new discoveries first, fall back to general search
+      const discoveryResults = await searchNewDiscoveries(query)
+      if (discoveryResults.length > 0) {
+        setResults(discoveryResults)
+      } else {
+        const generalResults = await searchSpecies(query)
+        setResults(generalResults)
+      }
     } catch (e) {
       console.error('Search failed:', e)
       setResults([])
@@ -49,10 +62,10 @@ function App() {
   async function handleCategory(category) {
     setLoading(true)
     setHasSearched(true)
-    setSearchTerm(category)
+    setSearchTerm(category.split(' ').slice(0, 3).join(' '))
     setSelectedAnimal(null)
     try {
-      const data = await searchNewSpecies(category)
+      const data = await searchNewDiscoveries(category)
       setResults(data)
     } catch (e) {
       console.error('Category search failed:', e)
@@ -71,6 +84,8 @@ function App() {
     setResults([])
     setSearchTerm('')
   }
+
+  const currentYear = new Date().getFullYear()
 
   return (
     <div className="min-h-screen pb-12">
@@ -93,10 +108,10 @@ function App() {
               <div className="text-center py-12 animate-pop-in">
                 <div className="text-6xl mb-4">🔍</div>
                 <p className="text-xl text-jungle font-bold">
-                  Hmm, we couldn't find that creature!
+                  Hmm, no new discoveries found for that!
                 </p>
                 <p className="text-gray-500 mt-2">
-                  Try searching for something else, like "frog" or "deep sea fish"
+                  Try searching for something like "new frog discovered" or "dinosaur fossil"
                 </p>
               </div>
             )}
@@ -104,13 +119,13 @@ function App() {
             {!loading && hasSearched && results.length > 0 && (
               <div>
                 <h2 className="text-2xl font-bold text-jungle mb-4 font-['Fredoka_One']">
-                  We found {results.length} creatures for "{searchTerm}"!
+                  {results.length} discoveries for "{searchTerm}"!
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {results.map((animal, i) => (
-                    <AnimalCard
+                    <DiscoveryCard
                       key={animal.id}
-                      animal={animal}
+                      species={animal}
                       index={i}
                       onClick={() => setSelectedAnimal(animal)}
                     />
@@ -119,43 +134,70 @@ function App() {
               </div>
             )}
 
-            {!loading && !hasSearched && recentAnimals.length > 0 && (
-              <div className="mt-8">
-                <h2 className="text-2xl font-bold text-jungle mb-4 font-['Fredoka_One'] flex items-center gap-2">
-                  <span className="text-3xl">🌍</span> Recently Spotted Animals
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {recentAnimals.map((animal, i) => (
+            {!loading && !hasSearched && discoveries.length > 0 && (
+              <div className="mt-4">
+                {/* Year selector */}
+                <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+                  <h2 className="text-2xl font-bold text-jungle font-['Fredoka_One'] flex items-center gap-2">
+                    <span className="text-3xl">🔬</span> Newly Discovered Species
+                  </h2>
+                  <div className="flex gap-2">
+                    {[currentYear, currentYear - 1, currentYear - 2].map((year) => (
+                      <button
+                        key={year}
+                        onClick={async () => {
+                          setDiscoveryYear(year)
+                          setLoading(true)
+                          try {
+                            const { species } = await import('./api').then((m) =>
+                              m.getNewlyDescribedSpecies(year)
+                            )
+                            setDiscoveries(species)
+                          } catch (e) {
+                            console.error(e)
+                          }
+                          setLoading(false)
+                        }}
+                        className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${
+                          discoveryYear === year
+                            ? 'bg-jungle text-white shadow-lg'
+                            : 'bg-white text-jungle border-2 border-jungle-light hover:bg-jungle-light/10'
+                        }`}
+                      >
+                        {year}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <p className="text-gray-500 mb-6 text-sm">
+                  These are real species that scientists officially described for the first time.
+                  Every one of them is a brand new addition to what we know about life on Earth!
+                </p>
+
+                {/* Stats bar */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                  {getDiscoveryStats(discoveries).map((stat) => (
                     <div
-                      key={animal.id}
-                      className="animate-slide-up bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-transparent hover:border-ocean-light hover:shadow-xl transition-all duration-300 cursor-pointer"
-                      style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both' }}
-                      onClick={() => handleSearch(animal.scientificName || animal.title)}
+                      key={stat.type}
+                      className="bg-white rounded-xl px-4 py-2 shadow-sm border border-gray-100 flex items-center gap-2 text-sm font-semibold text-gray-600"
                     >
-                      {animal.image ? (
-                        <img
-                          src={animal.image}
-                          alt={animal.title}
-                          className="w-full h-44 object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-44 bg-gradient-to-br from-ocean-light to-jungle-light flex items-center justify-center">
-                          <span className="text-6xl">{getAnimalEmoji(animal.iconic)}</span>
-                        </div>
-                      )}
-                      <div className="p-4">
-                        <h3 className="font-bold text-lg text-jungle capitalize">
-                          {animal.title}
-                        </h3>
-                        {animal.scientificName && (
-                          <p className="text-sm text-gray-400 italic">{animal.scientificName}</p>
-                        )}
-                        <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
-                          <span>📍</span>
-                          <span>{animal.location}</span>
-                        </div>
-                      </div>
+                      <span className="text-lg">{stat.emoji}</span>
+                      <span>
+                        {stat.count} {stat.label}
+                      </span>
                     </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {discoveries.map((species, i) => (
+                    <DiscoveryCard
+                      key={species.id}
+                      species={species}
+                      index={i}
+                      onClick={() => setSelectedAnimal(species)}
+                    />
                   ))}
                 </div>
               </div>
@@ -165,24 +207,28 @@ function App() {
       </main>
 
       <footer className="text-center mt-12 pb-6 text-gray-400 text-sm">
-        Made with 💚 for curious kids everywhere
+        Made with 💚 for curious kids who love new discoveries
       </footer>
     </div>
   )
 }
 
-function getAnimalEmoji(iconic) {
-  const map = {
-    Mammalia: '🦁',
-    Reptilia: '🦎',
-    Amphibia: '🐸',
-    Aves: '🦅',
-    Actinopterygii: '🐟',
-    Insecta: '🦋',
-    Arachnida: '🕷️',
-    Mollusca: '🐙',
+function getDiscoveryStats(discoveries) {
+  const counts = {}
+  for (const d of discoveries) {
+    const type = d.type || 'unknown'
+    counts[type] = (counts[type] || 0) + 1
   }
-  return map[iconic] || '🐾'
+
+  return Object.entries(counts)
+    .map(([type, count]) => ({
+      type,
+      count,
+      emoji: getTypeEmoji(type),
+      label: type.charAt(0).toUpperCase() + type.slice(1) + (count > 1 ? 's' : ''),
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6)
 }
 
 export default App

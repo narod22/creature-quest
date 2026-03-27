@@ -34,7 +34,7 @@ export default function FunHeader({ onGoHome }) {
           </span>
         </div>
         <p className="text-lg text-gray-500 font-semibold">
-          Discover the world's most amazing animals!
+          Find species that scientists just discovered!
         </p>
       </div>
 

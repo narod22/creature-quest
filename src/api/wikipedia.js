@@ -25,6 +25,80 @@ function buildSpecies(page, overrides = {}) {
   }
 }
 
+/**
+ * Check if a Wikipedia page is about an actual species/organism rather than
+ * a general topic (like "Bird migration", "Birdcage", "Fecal sac").
+ *
+ * Real species pages almost always have:
+ *  - Categories like "Species described in YYYY" or "Taxa named by..."
+ *  - Scientific classification language in the intro ("is a species of",
+ *    "is a genus of", "is an extinct", "is a family of")
+ *  - A binomial/trinomial name pattern in the intro
+ *
+ * Topic/concept pages have categories like "Ornithology", "Ethology",
+ * titles like "Outline of...", "Glossary of...", "List of..."
+ */
+function isActualSpeciesPage(page) {
+  const title = page.title || ''
+  const extract = (page.extract || '').toLowerCase()
+  const cats = (page.categories || []).map((c) => (c.title || c).toLowerCase())
+  const catText = cats.join(' ')
+
+  // Reject obvious non-species page titles
+  const badTitlePrefixes = [
+    'outline of', 'glossary of', 'list of', 'index of',
+    'timeline of', 'history of', 'climate change and',
+  ]
+  const titleLower = title.toLowerCase()
+  if (badTitlePrefixes.some((p) => titleLower.startsWith(p))) return false
+
+  // Reject topic/concept articles by title patterns
+  const badTitleWords = [
+    'terminology', 'migration', 'birdcage', 'cage', 'membrane',
+    'conservation', 'evolution of', 'anatomy of', 'plucking post',
+    'fecal sac', 'foraging flock', 'helpers at the',
+  ]
+  if (badTitleWords.some((w) => titleLower.includes(w))) return false
+
+  // Strong positive signal: "Species described in" category
+  if (catText.includes('species described in') || catText.includes('described in 2')) return true
+  if (catText.includes('taxa named by')) return true
+
+  // Strong positive signal: scientific classification language in the intro
+  const speciesPatterns = [
+    'is a species of', 'is a genus of', 'is a family of',
+    'is an order of', 'is a class of', 'is a subspecies of',
+    'is an extinct', 'is a group of', 'is a type of',
+    'are a family of', 'are a genus of', 'are an order of',
+    'are a species of', 'is a small', 'is a large',
+    'is a medium', 'is a common', 'is a rare',
+    'is a venomous', 'is a poisonous', 'is a flightless',
+    'is a nocturnal', 'is a diurnal', 'is a migratory',
+    'is a predatory', 'is a parasitic',
+    // Intro patterns like "The X (Scientific name) is a..."
+    'is a bird', 'is a mammal', 'is a reptile', 'is a fish',
+    'is an amphibian', 'is an insect', 'is an arachnid',
+    'is a crustacean', 'is a mollus',
+    'are birds', 'are mammals', 'are reptiles', 'are fish',
+    'are amphibians', 'are insects',
+    // Specific organism language
+    'endemic to', 'native to', 'found in', 'inhabits',
+    'belongs to the family', 'of the family', 'in the family',
+    'of the order', 'in the order',
+  ]
+  if (speciesPatterns.some((p) => extract.includes(p))) return true
+
+  // Parenthetical scientific name in first line (e.g., "The red fox (Vulpes vulpes)")
+  const firstLine = (page.extract || '').split('\n')[0] || ''
+  if (/\([A-Z][a-z]+ [a-z]+\)/.test(firstLine)) return true
+
+  // If it has a biological taxonomy category AND doesn't look like a concept
+  if (catText.includes('biota of') || catText.includes('fauna of') || catText.includes('flora of')) return true
+
+  // Fallback: reject if none of the positive signals matched
+  return false
+}
+
 // Fetch page details (extracts, images, categories) for a set of page IDs
 async function fetchPageDetails(pageIds) {
   if (!pageIds.length) return []
@@ -102,9 +176,10 @@ export async function searchSpecies(query) {
   const pageIds = allSearchResults.slice(0, 20).map((r) => r.pageid)
   const pages = await fetchPageDetails(pageIds)
 
-  // Build species objects and STRICTLY filter to actual biological species
-  // Only keep pages that our taxonomy system can classify (type !== 'unknown')
+  // Build species objects and STRICTLY filter to actual species pages
+  // Must pass both: taxonomy classification AND the species-page check
   const species = pages
+    .filter((page) => isActualSpeciesPage(page))
     .map((page) => buildSpecies(page))
     .filter((s) => s.type !== 'unknown')
 
@@ -115,12 +190,17 @@ export async function searchSpecies(query) {
 /**
  * Browse species by taxonomy category using Wikipedia's category members API.
  * Used when tapping a category button (Mammals, Birds, etc.)
+ *
+ * Broad categories like "Mammals" contain mostly subcategories (Carnivora,
+ * Rodentia, etc.) rather than direct species pages. So we dig into multiple
+ * random subcategories to collect enough actual species articles.
  */
 export async function browseByCategory(wikiCategory) {
   const cacheKey = `browse:${wikiCategory}`
   const cached = getCached(cacheKey)
   if (cached) return cached
 
+  // Step 1: Get top-level members (pages + subcategories)
   const params = wikiParams({
     action: 'query',
     list: 'categorymembers',
@@ -133,37 +213,80 @@ export async function browseByCategory(wikiCategory) {
   const data = await res.json()
   const members = data.query?.categorymembers || []
 
-  // Separate pages from subcategories
-  const pages = members.filter((m) => m.ns === 0)
+  const directPages = members.filter((m) => m.ns === 0)
   const subcats = members.filter((m) => m.ns === 14)
 
-  // If few direct pages, also browse a random subcategory
-  let allPageIds = pages.map((m) => m.pageid)
+  const allPageIds = new Set(directPages.map((m) => m.pageid))
 
-  if (allPageIds.length < 10 && subcats.length > 0) {
-    const randomSubcat = subcats[Math.floor(Math.random() * subcats.length)]
-    const subParams = wikiParams({
-      action: 'query',
-      list: 'categorymembers',
-      cmtitle: randomSubcat.title,
-      cmtype: 'page',
-      cmlimit: '20',
-    })
-    try {
-      const subRes = await fetch(`${WIKI_API}?${subParams}`)
-      const subData = await subRes.json()
-      const subPages = subData.query?.categorymembers || []
-      allPageIds.push(...subPages.map((m) => m.pageid))
-    } catch {
-      // continue with what we have
+  // Step 2: Explore several random subcategories to find actual species pages
+  // Most broad categories (Mammals, Birds) are almost entirely subcategories,
+  // so we need to dig into 4-6 of them to get a good sample.
+  if (subcats.length > 0) {
+    const randomSubcats = shuffleArray(subcats).slice(0, 6)
+
+    // Fetch from subcategories in parallel (2 at a time)
+    for (let i = 0; i < randomSubcats.length; i += 2) {
+      const batch = randomSubcats.slice(i, i + 2)
+      const fetches = batch.map(async (subcat) => {
+        try {
+          // First try getting pages from this subcategory
+          const subParams = wikiParams({
+            action: 'query',
+            list: 'categorymembers',
+            cmtitle: subcat.title,
+            cmtype: 'page|subcat',
+            cmlimit: '30',
+          })
+          const subRes = await fetch(`${WIKI_API}?${subParams}`)
+          const subData = await subRes.json()
+          const subMembers = subData.query?.categorymembers || []
+
+          const subPages = subMembers.filter((m) => m.ns === 0)
+          const subSubcats = subMembers.filter((m) => m.ns === 14)
+
+          // If this subcategory also has mostly subcategories, dig one level deeper
+          if (subPages.length < 5 && subSubcats.length > 0) {
+            const deepSubcat = subSubcats[Math.floor(Math.random() * subSubcats.length)]
+            const deepParams = wikiParams({
+              action: 'query',
+              list: 'categorymembers',
+              cmtitle: deepSubcat.title,
+              cmtype: 'page',
+              cmlimit: '20',
+            })
+            const deepRes = await fetch(`${WIKI_API}?${deepParams}`)
+            const deepData = await deepRes.json()
+            const deepPages = deepData.query?.categorymembers || []
+            return [...subPages, ...deepPages]
+          }
+
+          return subPages
+        } catch {
+          return []
+        }
+      })
+
+      const results = await Promise.all(fetches)
+      for (const pages of results) {
+        for (const p of pages) {
+          allPageIds.add(p.pageid)
+        }
+      }
+
+      // Stop early if we have plenty
+      if (allPageIds.size >= 40) break
     }
   }
 
-  // Shuffle and take a sample
-  const sampleIds = shuffleArray(allPageIds).slice(0, 18)
+  // Step 3: Shuffle all collected page IDs and fetch details for a sample
+  const sampleIds = shuffleArray([...allPageIds]).slice(0, 18)
   const pageDetails = await fetchPageDetails(sampleIds)
 
-  const species = pageDetails.map((page) => buildSpecies(page))
+  // Filter to actual species pages (not "Bird migration", "Birdcage", etc.)
+  const species = pageDetails
+    .filter((page) => isActualSpeciesPage(page))
+    .map((page) => buildSpecies(page))
+
   setCache(cacheKey, species)
   return species
 }

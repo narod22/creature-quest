@@ -313,63 +313,13 @@ export function generateKidFacts(details) {
     facts.push(...curatedFacts.map((f) => f.text))
   }
 
-  // Step 2: Extract additional facts from Wikipedia text
-  if (facts.length < 4) {
-    const text = (details.fullText || details.summary || '').toLowerCase()
-    const sourceText = details.fullText || details.summary || ''
-
-    // Discovery year
-    const describedMatch = sourceText.match(/(?:described|discovered|first described)(?: by .+?)? in (\d{4})/i)
-    if (describedMatch) {
-      const year = parseInt(describedMatch[1])
-      if (year >= 2020) {
-        facts.push(`Brand new discovery! Scientists described this species in ${year}!`)
-      } else {
-        facts.push(`Scientists first described this species in ${year}!`)
-      }
-    }
-
-    // Named after
-    const namedAfter = sourceText.match(/named (?:after|in (?:honor|honour) of) (.+?)[.,]/i)
-    if (namedAfter) {
-      facts.push(`This species was named after ${namedAfter[1]}!`)
-    }
-
-    // Location
-    const foundIn = sourceText.match(/(?:found in|endemic to|native to) ([A-Z][^.]{5,50})/i)
-    if (foundIn) {
-      facts.push(`It can be found in ${foundIn[1].replace(/[.,]$/, '')}!`)
-    }
-
-    // Diet
-    if (text.includes('herbivore') || (text.includes('plants') && text.includes('eat'))) {
-      facts.push('This animal is a plant-eater! It loves munching on plants and leaves.')
-    } else if (text.includes('carnivore') || text.includes('prey') || text.includes('hunt')) {
-      facts.push('This is a meat-eater! It hunts other animals for food.')
-    } else if (text.includes('omnivore')) {
-      facts.push('This animal eats both plants AND meat. Talk about not being picky!')
-    }
-
-    // Extinct status using proper flag
-    if (details.isExtinct === true) {
-      facts.push("This animal is extinct, which means it doesn't live on Earth anymore. But scientists found it!")
-    } else if (text.includes('endangered')) {
-      facts.push('This animal is endangered. There are very few left, and we need to protect them!')
-    }
-
-    if (text.includes('nocturnal')) {
-      facts.push('This animal is nocturnal, meaning it sleeps during the day and wakes up at night!')
-    }
-
-    if (text.includes('venom') || text.includes('poisonous')) {
-      facts.push('Watch out! This animal has special venom or poison to protect itself!')
-    }
-
-    // Fossil age
-    const myaMatch = sourceText.match(/(\d+[\.\d]*)\s*million years ago/i)
-    if (myaMatch) {
-      facts.push(`This creature lived about ${myaMatch[1]} million years ago!`)
-    }
+  // Step 2: ONLY extract from Wikipedia if we have ZERO curated facts.
+  // The Wikipedia text extraction is unreliable and produces garbage like
+  // "found in crocodile stomachs" or "plant-eater" for lions. Curated
+  // facts are verified. Don't contaminate them with bad extraction.
+  if (facts.length === 0) {
+    const extracted = extractWikipediaFacts(details)
+    facts.push(...extracted)
   }
 
   if (facts.length < 2) {
@@ -377,7 +327,52 @@ export function generateKidFacts(details) {
     facts.push('Scientists discover about 18,000 new species every single year!')
   }
 
-  // Deduplicate (curated + extracted might overlap)
   const unique = [...new Set(facts)]
   return unique.slice(0, 8)
+}
+
+/**
+ * Extract facts from Wikipedia text. ONLY used when no curated facts exist.
+ * Conservative: only extracts things we can be reasonably sure about.
+ */
+function extractWikipediaFacts(details) {
+  const text = (details.fullText || details.summary || '').toLowerCase()
+  const sourceText = details.fullText || details.summary || ''
+  // Only look at the first ~500 chars (the intro) to avoid pulling
+  // facts from evolutionary history, predator sections, etc.
+  const intro = sourceText.slice(0, 500)
+  const introLower = intro.toLowerCase()
+  const facts = []
+
+  // Discovery year (only from intro)
+  const describedMatch = intro.match(/(?:described|discovered|first described)(?: by .+?)? in (\d{4})/i)
+  if (describedMatch) {
+    const year = parseInt(describedMatch[1])
+    if (year >= 2020) {
+      facts.push(`Brand new discovery! Scientists described this species in ${year}!`)
+    } else if (year >= 1900) {
+      facts.push(`Scientists first described this species in ${year}!`)
+    }
+  }
+
+  // Extinct status (ONLY from the isExtinct flag, never from text)
+  if (details.isExtinct === true) {
+    facts.push("This animal is extinct, which means it doesn't live on Earth anymore. But scientists found it!")
+  }
+
+  // Diet (only from intro, and only explicit keywords)
+  if (introLower.includes('herbivore')) {
+    facts.push('This animal is a plant-eater!')
+  } else if (introLower.includes('carnivore') || introLower.includes('apex predator')) {
+    facts.push('This is a meat-eater! It hunts other animals for food.')
+  } else if (introLower.includes('omnivore')) {
+    facts.push('This animal eats both plants AND meat!')
+  }
+
+  // Nocturnal (only from intro)
+  if (introLower.includes('nocturnal')) {
+    facts.push('This animal is nocturnal, meaning it sleeps during the day and wakes up at night!')
+  }
+
+  return facts
 }

@@ -1,6 +1,7 @@
 // Wikipedia API calls for species data
 import { classifySpecies } from './taxonomy'
 import { getTypeEmoji, getTypeLabel, getCached, setCache, shuffleArray } from './helpers'
+import { getCuratedTitles } from './curated-species'
 
 const WIKI_API = 'https://en.wikipedia.org/w/api.php'
 
@@ -11,6 +12,9 @@ function wikiParams(extra) {
 // Build a standardized species object from a Wikipedia page
 function buildSpecies(page, overrides = {}) {
   const type = classifySpecies(page)
+  const cats = (page.categories || []).map((c) => (c.title || c).replace('Category:', ''))
+  const isExtinct = checkExtinct(cats, page.extract)
+
   return {
     id: page.pageid,
     title: page.title,
@@ -20,9 +24,39 @@ function buildSpecies(page, overrides = {}) {
     type,
     typeEmoji: getTypeEmoji(type),
     typeLabel: getTypeLabel(type),
-    categories: (page.categories || []).map((c) => (c.title || c).replace('Category:', '')),
+    categories: cats,
+    isExtinct,
     ...overrides,
   }
+}
+
+/**
+ * Determine if a species is extinct using Wikipedia CATEGORIES (not text guessing).
+ *
+ * The old approach scanned the intro text for the word "extinct" and got
+ * false positives (e.g., "unlike its extinct relatives"). This version
+ * only checks for explicit "Extinct" categories in Wikipedia's taxonomy.
+ * If a species is in the "Extinct animals" or "Fossil taxa" categories, it's extinct.
+ * Otherwise it's alive, even if the text mentions extinction in passing.
+ */
+function checkExtinct(categories, extract) {
+  const catText = categories.map((c) => c.toLowerCase()).join(' ')
+
+  // Strong signal: explicit extinct categories
+  if (catText.includes('extinct') && !catText.includes('extant')) return true
+  if (catText.includes('fossil taxa')) return true
+  if (catText.includes('prehistoric')) return true
+
+  // Only check text as backup if categories are empty
+  // AND the first sentence explicitly says "is an extinct" or "was an extinct"
+  if (categories.length === 0 && extract) {
+    const firstSentence = extract.split('.')[0].toLowerCase()
+    if (firstSentence.includes('is an extinct') || firstSentence.includes('was an extinct')) {
+      return true
+    }
+  }
+
+  return false
 }
 
 /**
@@ -135,25 +169,29 @@ async function fetchPageDetails(pageIds) {
 
 /**
  * Search for species by query. Used on the Explore page.
- * Searches Wikipedia and filters to pages with biological taxonomy categories.
- * Runs two searches in parallel: the raw query + "query species" to maximize
- * the chance of finding actual animal/species pages.
+ *
+ * Strategy: try EXACT TITLE LOOKUP first (so "giant squid" returns the
+ * Giant Squid article directly), then fall back to text search for broader
+ * queries like "animals that glow" or "fastest bird".
  */
 export async function searchSpecies(query) {
   const cacheKey = `search:${query}`
   const cached = getCached(cacheKey)
   if (cached) return cached
 
-  // Run two searches in parallel for better species coverage
+  // Step 1: Try direct title lookup first (handles "giant squid", "red fox", etc.)
+  const directPages = await fetchPagesByTitle([query])
+
+  // Step 2: Also run text searches in parallel for broader coverage
   const [res1, res2] = await Promise.all([
     fetch(`${WIKI_API}?${wikiParams({
       action: 'query', list: 'search',
-      srsearch: `${query} species animal`,
+      srsearch: query,
       srnamespace: '0', srlimit: '15',
     })}`),
     fetch(`${WIKI_API}?${wikiParams({
       action: 'query', list: 'search',
-      srsearch: query,
+      srsearch: `${query} species`,
       srnamespace: '0', srlimit: '10',
     })}`),
   ])
@@ -161,134 +199,110 @@ export async function searchSpecies(query) {
   const data1 = await res1.json()
   const data2 = await res2.json()
 
-  // Merge results, deduplicating by page ID
+  // Merge search results, deduplicating by page ID
   const seenIds = new Set()
-  const allSearchResults = []
+
+  // Add direct title match first (highest priority)
+  for (const page of directPages) {
+    seenIds.add(page.pageid)
+  }
+
+  const searchPageIds = []
   for (const result of [...(data1.query?.search || []), ...(data2.query?.search || [])]) {
     if (!seenIds.has(result.pageid)) {
       seenIds.add(result.pageid)
-      allSearchResults.push(result)
+      searchPageIds.push(result.pageid)
     }
   }
 
-  if (!allSearchResults.length) return []
+  // Fetch details for search results
+  const searchPages = await fetchPageDetails(searchPageIds.slice(0, 20))
 
-  const pageIds = allSearchResults.slice(0, 20).map((r) => r.pageid)
-  const pages = await fetchPageDetails(pageIds)
+  // Build species: direct title matches first, then filtered search results
+  const allSpecies = [
+    ...directPages.map((page) => buildSpecies(page)),
+    ...searchPages
+      .filter((page) => isActualSpeciesPage(page))
+      .map((page) => buildSpecies(page)),
+  ]
 
-  // Build species objects and STRICTLY filter to actual species pages
-  // Must pass both: taxonomy classification AND the species-page check
-  const species = pages
-    .filter((page) => isActualSpeciesPage(page))
-    .map((page) => buildSpecies(page))
-    .filter((s) => s.type !== 'unknown')
+  // Deduplicate by ID (in case title match also appears in search)
+  const seen = new Set()
+  const species = allSpecies.filter((s) => {
+    if (seen.has(s.id)) return false
+    seen.add(s.id)
+    return true
+  })
 
   setCache(cacheKey, species)
   return species
 }
 
 /**
- * Browse species by taxonomy category using Wikipedia's category members API.
- * Used when tapping a category button (Mammals, Birds, etc.)
+ * Browse species by category using CURATED POPULAR SPECIES LISTS.
  *
- * Broad categories like "Mammals" contain mostly subcategories (Carnivora,
- * Rodentia, etc.) rather than direct species pages. So we dig into multiple
- * random subcategories to collect enough actual species articles.
+ * Wikipedia's taxonomic categories return parasitic trematodes and obscure
+ * nematodes instead of dolphins and sea turtles. So we use hand-curated
+ * lists of popular, recognizable, kid-friendly species per category
+ * and fetch their Wikipedia data by exact title.
+ *
+ * The categoryLabel param matches the label from CATEGORIES in helpers.js
+ * (e.g., "Mammals", "Ocean Creatures", "Dinosaurs").
  */
-export async function browseByCategory(wikiCategory) {
-  const cacheKey = `browse:${wikiCategory}`
+export async function browseByCategory(categoryLabel) {
+  const cacheKey = `browse:${categoryLabel}`
   const cached = getCached(cacheKey)
   if (cached) return cached
 
-  // Step 1: Get top-level members (pages + subcategories)
-  const params = wikiParams({
-    action: 'query',
-    list: 'categorymembers',
-    cmtitle: `Category:${wikiCategory}`,
-    cmtype: 'page|subcat',
-    cmlimit: '50',
-  })
+  // Get shuffled sample of curated species titles for this category
+  const titles = getCuratedTitles(categoryLabel, 20)
+  if (!titles.length) return []
 
-  const res = await fetch(`${WIKI_API}?${params}`)
-  const data = await res.json()
-  const members = data.query?.categorymembers || []
+  // Fetch Wikipedia pages by exact title (batch lookup)
+  const pages = await fetchPagesByTitle(titles)
 
-  const directPages = members.filter((m) => m.ns === 0)
-  const subcats = members.filter((m) => m.ns === 14)
-
-  const allPageIds = new Set(directPages.map((m) => m.pageid))
-
-  // Step 2: Explore several random subcategories to find actual species pages
-  // Most broad categories (Mammals, Birds) are almost entirely subcategories,
-  // so we need to dig into 4-6 of them to get a good sample.
-  if (subcats.length > 0) {
-    const randomSubcats = shuffleArray(subcats).slice(0, 6)
-
-    // Fetch from subcategories in parallel (2 at a time)
-    for (let i = 0; i < randomSubcats.length; i += 2) {
-      const batch = randomSubcats.slice(i, i + 2)
-      const fetches = batch.map(async (subcat) => {
-        try {
-          // First try getting pages from this subcategory
-          const subParams = wikiParams({
-            action: 'query',
-            list: 'categorymembers',
-            cmtitle: subcat.title,
-            cmtype: 'page|subcat',
-            cmlimit: '30',
-          })
-          const subRes = await fetch(`${WIKI_API}?${subParams}`)
-          const subData = await subRes.json()
-          const subMembers = subData.query?.categorymembers || []
-
-          const subPages = subMembers.filter((m) => m.ns === 0)
-          const subSubcats = subMembers.filter((m) => m.ns === 14)
-
-          // If this subcategory also has mostly subcategories, dig one level deeper
-          if (subPages.length < 5 && subSubcats.length > 0) {
-            const deepSubcat = subSubcats[Math.floor(Math.random() * subSubcats.length)]
-            const deepParams = wikiParams({
-              action: 'query',
-              list: 'categorymembers',
-              cmtitle: deepSubcat.title,
-              cmtype: 'page',
-              cmlimit: '20',
-            })
-            const deepRes = await fetch(`${WIKI_API}?${deepParams}`)
-            const deepData = await deepRes.json()
-            const deepPages = deepData.query?.categorymembers || []
-            return [...subPages, ...deepPages]
-          }
-
-          return subPages
-        } catch {
-          return []
-        }
-      })
-
-      const results = await Promise.all(fetches)
-      for (const pages of results) {
-        for (const p of pages) {
-          allPageIds.add(p.pageid)
-        }
-      }
-
-      // Stop early if we have plenty
-      if (allPageIds.size >= 40) break
-    }
-  }
-
-  // Step 3: Shuffle all collected page IDs and fetch details for a sample
-  const sampleIds = shuffleArray([...allPageIds]).slice(0, 18)
-  const pageDetails = await fetchPageDetails(sampleIds)
-
-  // Filter to actual species pages (not "Bird migration", "Birdcage", etc.)
-  const species = pageDetails
-    .filter((page) => isActualSpeciesPage(page))
-    .map((page) => buildSpecies(page))
+  // Build species objects (no isActualSpeciesPage filter needed for curated lists)
+  const species = pages.map((page) => buildSpecies(page))
 
   setCache(cacheKey, species)
   return species
+}
+
+/**
+ * Fetch Wikipedia pages by exact title in batches.
+ * Unlike search, this does a direct title lookup, so "Giant squid"
+ * returns the Giant Squid article, not a random search result.
+ */
+async function fetchPagesByTitle(titles) {
+  const results = []
+
+  // Wikipedia API accepts up to 50 titles per request
+  for (let i = 0; i < titles.length; i += 20) {
+    const batch = titles.slice(i, i + 20)
+    const params = wikiParams({
+      action: 'query',
+      titles: batch.join('|'),
+      prop: 'extracts|pageimages|categories',
+      exintro: '1',
+      explaintext: '1',
+      exsentences: '4',
+      piprop: 'thumbnail',
+      pithumbsize: '400',
+      cllimit: '50',
+      redirects: '1', // Follow redirects (e.g., "Dolphin" → "Oceanic dolphin")
+    })
+
+    try {
+      const res = await fetch(`${WIKI_API}?${params}`)
+      const data = await res.json()
+      const pages = Object.values(data.query?.pages || {})
+      results.push(...pages.filter((p) => p.pageid > 0 && p.extract && p.extract.length > 20))
+    } catch {
+      // continue with other batches
+    }
+  }
+
+  return results
 }
 
 /**

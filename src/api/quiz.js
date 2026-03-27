@@ -148,11 +148,17 @@ function extractTrueFalseFact(species) {
     return { statement: `True or false: The ${species.title} is a mammal.`, isTrue: true }
   }
 
-  if (text.includes('extinct')) {
+  // Use the isExtinct flag from Wikipedia categories (not text guessing)
+  if (species.isExtinct === true) {
     if (makeFalse) {
       return { statement: `True or false: The ${species.title} is still alive today.`, isTrue: false }
     }
-    return { statement: `True or false: The ${species.title} is extinct.`, isTrue: true }
+    return { statement: `True or false: The ${species.title} is extinct (no longer alive).`, isTrue: true }
+  } else if (species.isExtinct === false) {
+    // We know it's alive, so we can ask the reverse
+    if (makeFalse) {
+      return { statement: `True or false: The ${species.title} is extinct.`, isTrue: false }
+    }
   }
 
   if (text.includes('nocturnal')) {
@@ -251,8 +257,8 @@ export function generateKidFacts(details) {
     facts.push('Brrr! This animal lives in the freezing cold arctic!')
   }
 
-  // Special traits
-  if (text.includes('extinct')) {
+  // Special traits - use isExtinct flag from Wikipedia categories, not text guessing
+  if (details.isExtinct === true) {
     facts.push("This animal is extinct, which means it doesn't live on Earth anymore. But scientists found it!")
   } else if (text.includes('endangered')) {
     facts.push('This animal is endangered. There are very few left, and we need to protect them!')

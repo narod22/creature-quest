@@ -32,7 +32,7 @@ export default function QuizPage() {
 
       for (const cat of randomCats) {
         try {
-          const species = await browseByCategory(cat.wikiCategory)
+          const species = await browseByCategory(cat.label)
           allSpecies.push(...species.filter((s) => s.image && s.type !== 'unknown'))
         } catch {
           // continue

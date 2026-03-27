@@ -34,7 +34,7 @@ export default function ExplorePage() {
     setHasSearched(true)
     setSearchLabel(category.label)
     try {
-      const data = await browseByCategory(category.wikiCategory)
+      const data = await browseByCategory(category.label)
       setResults(data)
     } catch (e) {
       console.error('Category browse failed:', e)

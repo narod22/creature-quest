@@ -217,4 +217,85 @@ export const SPECIES_FACTS = {
   'Fly agaric': [
     { text: 'The red and white fly agaric mushroom is one of the most recognizable mushrooms in the world.', q: 'What colors is the fly agaric mushroom?', a: 'Red with white spots', wrong: ['Blue with green spots', 'All black', 'Yellow with brown stripes'], category: 'body' },
   ],
+
+  // ── Additional popular animals (batch 2) ──────────────────────────
+  'Tiger': [
+    { text: 'Every tiger has a unique pattern of stripes, like a human fingerprint. No two tigers are alike.', q: 'What is unique about every tiger?', a: 'Their stripe pattern (like a fingerprint)', wrong: ['Their eye color', 'The shape of their ears', 'The length of their tail'], category: 'body' },
+    { text: 'Tigers are the largest wild cats in the world, weighing up to 660 pounds.', q: 'What is the largest wild cat in the world?', a: 'Tiger', wrong: ['Lion', 'Leopard', 'Jaguar'], category: 'size' },
+    { text: 'Unlike most cats, tigers love water and are excellent swimmers.', q: 'What do tigers surprisingly enjoy?', a: 'Swimming', wrong: ['Climbing trees', 'Digging burrows', 'Rolling in mud'], category: 'behavior' },
+  ],
+  'Snow leopard': [
+    { text: 'Snow leopards cannot roar. They make a sound called a "chuff" to greet each other.', q: 'What sound does a snow leopard make instead of roaring?', a: 'A chuff', wrong: ['A bark', 'A whistle', 'A hiss'], category: 'ability' },
+    { text: 'A snow leopard\'s thick tail is almost as long as its body and is used for balance and warmth.', q: 'Why does a snow leopard have such a long, thick tail?', a: 'For balance and warmth', wrong: ['To attract mates', 'To catch prey', 'To swim'], category: 'body' },
+  ],
+  'Gorilla': [
+    { text: 'Gorillas share about 98% of their DNA with humans, making them one of our closest relatives.', q: 'How much DNA do gorillas share with humans?', a: 'About 98%', wrong: ['About 50%', 'About 75%', 'About 90%'], category: 'body' },
+    { text: 'Gorillas make nests to sleep in every night, bending branches and leaves into a cozy bed.', q: 'What do gorillas build every night?', a: 'A sleeping nest from branches and leaves', wrong: ['A shelter from rocks', 'A dam across a stream', 'A tunnel underground'], category: 'behavior' },
+    { text: 'A male gorilla can eat up to 40 pounds of food in a single day.', q: 'How much food can a male gorilla eat per day?', a: 'Up to 40 pounds', wrong: ['Up to 10 pounds', 'Up to 25 pounds', 'Up to 60 pounds'], category: 'diet' },
+  ],
+  'Orangutan': [
+    { text: 'Orangutans are the largest tree-dwelling animals in the world.', q: 'What is the largest animal that lives in trees?', a: 'Orangutan', wrong: ['Gorilla', 'Chimpanzee', 'Sloth'], category: 'size' },
+    { text: 'Orangutans have been seen using sticks as tools to get insects out of holes and honey from beehives.', q: 'What do orangutans use sticks for?', a: 'Getting insects and honey', wrong: ['Building dams', 'Fighting predators', 'Digging burrows'], category: 'behavior' },
+  ],
+  'Hippopotamus': [
+    { text: 'Hippos produce a natural red-tinted sunscreen from their skin that protects them from sunburn.', q: 'What unusual thing does hippo skin produce?', a: 'A natural sunscreen (red-tinted)', wrong: ['Waterproof wax', 'Invisible ink', 'Antifreeze'], category: 'body' },
+    { text: 'Despite weighing up to 4,000 pounds, hippos can run up to 19 mph on land, faster than most humans.', q: 'Can a hippo outrun most humans?', a: 'Yes, they can run up to 19 mph', wrong: ['No, they can barely walk', 'No, they only move in water', 'Yes, up to 40 mph'], category: 'speed' },
+  ],
+  'Crocodile': [
+    { text: 'Crocodiles have the strongest bite ever measured in a living animal, over 3,700 pounds of force.', q: 'How strong is a crocodile\'s bite?', a: 'Over 3,700 pounds of force (strongest ever measured)', wrong: ['About 500 pounds of force', 'About 1,000 pounds of force', 'About 2,000 pounds of force'], category: 'ability' },
+    { text: 'Crocodiles really do produce tears while eating. The phrase "crocodile tears" comes from this real behavior.', q: 'Do crocodiles actually cry while eating?', a: 'Yes, they produce real tears', wrong: ['No, that is completely made up', 'Only baby crocodiles do', 'Only in captivity'], category: 'behavior' },
+    { text: 'Crocodiles can go over a year without eating a single meal.', q: 'How long can a crocodile survive without food?', a: 'Over a year', wrong: ['About a week', 'About a month', 'About three months'], category: 'ability' },
+  ],
+  'Sea turtle': [
+    { text: 'Sea turtles have been around for over 100 million years, meaning they lived alongside dinosaurs.', q: 'How long have sea turtles existed?', a: 'Over 100 million years (they lived with dinosaurs)', wrong: ['About 10 million years', 'About 1 million years', 'About 50 million years'], category: 'lifespan' },
+    { text: 'Sea turtles can hold their breath for up to 7 hours while resting.', q: 'How long can a resting sea turtle hold its breath?', a: 'Up to 7 hours', wrong: ['Up to 20 minutes', 'Up to 1 hour', 'Up to 3 hours'], category: 'ability' },
+  ],
+  'Red panda': [
+    { text: 'Red pandas are not closely related to giant pandas at all. They are in their own unique family.', q: 'Are red pandas related to giant pandas?', a: 'No, they are in their own unique family', wrong: ['Yes, they are cousins', 'Yes, they are the same species', 'Yes, red pandas are baby giant pandas'], category: 'body' },
+    { text: 'Red pandas use their bushy tails as blankets to keep warm while sleeping in cold mountain forests.', q: 'How do red pandas use their tails?', a: 'As blankets to keep warm', wrong: ['To hang from tree branches', 'To swat away insects', 'To signal other red pandas'], category: 'behavior' },
+  ],
+  'Orca': [
+    { text: 'Orcas (killer whales) are actually the largest members of the dolphin family, not whales.', q: 'What family do orcas actually belong to?', a: 'The dolphin family', wrong: ['The whale family', 'The shark family', 'The seal family'], category: 'body' },
+    { text: 'Different orca pods have their own unique calls that are passed down through generations, like a family dialect.', q: 'What is special about orca pod communication?', a: 'Each pod has its own unique calls (like a dialect)', wrong: ['All orcas use the same sounds', 'They communicate with body language only', 'They are mostly silent'], category: 'behavior' },
+  ],
+  'Pangolin': [
+    { text: 'Pangolins are the only mammals in the world that are covered in scales.', q: 'What makes pangolins unique among mammals?', a: 'They are the only mammals covered in scales', wrong: ['They are the only mammals that can fly', 'They are the smallest mammals', 'They are the fastest mammals'], category: 'body' },
+    { text: 'When threatened, a pangolin rolls into a tight ball that even lions cannot pry open.', q: 'How does a pangolin defend itself?', a: 'Rolls into a ball that predators cannot open', wrong: ['Sprays a bad smell like a skunk', 'Plays dead', 'Runs away at high speed'], category: 'ability' },
+  ],
+  'Wolverine': [
+    { text: 'Wolverines are the largest land-dwelling member of the weasel family, weighing up to 40 pounds.', q: 'What family does the wolverine belong to?', a: 'The weasel family', wrong: ['The bear family', 'The dog family', 'The cat family'], category: 'body' },
+    { text: 'Wolverines have been known to drive bears and mountain lions away from their food.', q: 'What larger animals will wolverines stand up to?', a: 'Bears and mountain lions', wrong: ['Only animals smaller than themselves', 'No other animals', 'Only other wolverines'], category: 'behavior' },
+  ],
+  'Barn owl': [
+    { text: 'Barn owls can hear a mouse\'s heartbeat from across a dark room and hunt in complete darkness using sound alone.', q: 'How do barn owls hunt in total darkness?', a: 'Using their incredible hearing alone', wrong: ['They can see in total darkness', 'They use echolocation like bats', 'They use their sense of smell'], category: 'ability' },
+    { text: 'A barn owl\'s face is shaped like a satellite dish to funnel sound directly into its ears.', q: 'Why is a barn owl\'s face shaped the way it is?', a: 'To funnel sound into its ears', wrong: ['To scare predators', 'To keep warm', 'To attract mates'], category: 'body' },
+  ],
+  'Flamingo': [
+    { text: 'Flamingos are not born pink. They turn pink from eating shrimp and algae that contain natural pigments.', q: 'Why are flamingos pink?', a: 'From eating shrimp and algae with natural pigments', wrong: ['They are born that color', 'From sitting in the sun', 'From the minerals in the water'], category: 'body' },
+    { text: 'Flamingos can only eat with their heads upside down, using their beaks as a filter.', q: 'How do flamingos eat?', a: 'With their heads upside down, filtering food', wrong: ['By diving underwater', 'By pecking like chickens', 'By catching fish mid-air'], category: 'behavior' },
+  ],
+  'Honey badger': [
+    { text: 'Honey badgers have such thick, loose skin that even bee stings, porcupine quills, and snake bites have little effect.', q: 'What protects a honey badger from attacks?', a: 'Thick, loose skin that resists stings and bites', wrong: ['Hard armor plates', 'A poisonous odor', 'Extremely fast reflexes'], category: 'body' },
+    { text: 'Honey badgers are known to fight off lions, hyenas, and venomous snakes, making them one of the most fearless animals.', q: 'What reputation do honey badgers have?', a: 'One of the most fearless animals', wrong: ['One of the most shy animals', 'The fastest digger', 'The best swimmer'], category: 'behavior' },
+  ],
+  'Electric eel': [
+    { text: 'Electric eels can produce a shock of up to 860 volts, enough to stun a horse.', q: 'How powerful is an electric eel\'s shock?', a: 'Up to 860 volts', wrong: ['Up to 50 volts', 'Up to 200 volts', 'Up to 500 volts'], category: 'ability' },
+    { text: 'Electric eels are not actually eels. They are more closely related to catfish and carp.', q: 'Are electric eels actually eels?', a: 'No, they are related to catfish and carp', wrong: ['Yes, they are true eels', 'They are a type of snake', 'They are related to sharks'], category: 'body' },
+  ],
+  'Stegosaurus': [
+    { text: 'A Stegosaurus had a brain about the size of a walnut, despite being the size of a bus.', q: 'How big was a Stegosaurus brain?', a: 'About the size of a walnut', wrong: ['About the size of a basketball', 'About the size of a grapefruit', 'About the size of a baseball'], category: 'body' },
+    { text: 'The plates on a Stegosaurus\'s back were likely used to regulate body temperature, not for fighting.', q: 'What were the plates on a Stegosaurus\'s back for?', a: 'Regulating body temperature', wrong: ['Fighting other dinosaurs', 'Attracting mates with color', 'Flying short distances'], category: 'body' },
+  ],
+  'Ankylosaurus': [
+    { text: 'Ankylosaurus had a massive tail club made of solid bone that could break the legs of a T. rex.', q: 'What weapon did Ankylosaurus have on its tail?', a: 'A solid bone club', wrong: ['Sharp spikes', 'A venomous stinger', 'A whip-like tail'], category: 'body' },
+    { text: 'Ankylosaurus was covered in thick bony plates called osteoderms, making it like a living tank.', q: 'What covered the body of Ankylosaurus?', a: 'Thick bony armor plates', wrong: ['Feathers', 'Scales like a fish', 'Thick fur'], category: 'body' },
+  ],
+  'Snowy owl': [
+    { text: 'Unlike most owls, snowy owls hunt during the day because they live in the Arctic where summer has 24 hours of daylight.', q: 'When do snowy owls hunt?', a: 'During the day (unlike most owls)', wrong: ['Only at night', 'Only at dawn', 'They do not hunt, they scavenge'], category: 'behavior' },
+    { text: 'Female snowy owls have dark spots for camouflage, while males become almost pure white as they age.', q: 'Which snowy owl is whiter?', a: 'Males (they become almost pure white)', wrong: ['Females are whiter', 'Both are equally white', 'Baby owls are whitest'], category: 'body' },
+  ],
+  'Wolf spider': [
+    { text: 'Wolf spiders do not build webs. They chase down their prey on foot like tiny wolves.', q: 'How do wolf spiders catch their food?', a: 'They chase prey on foot (no web)', wrong: ['They build large webs', 'They set traps in the ground', 'They wait in flowers'], category: 'behavior' },
+    { text: 'Mother wolf spiders carry their egg sac attached to their spinnerets, and after hatching, babies ride on her back.', q: 'How does a mother wolf spider carry her babies?', a: 'The babies ride on her back', wrong: ['She carries them in her mouth', 'She hides them in a burrow', 'She wraps them in silk'], category: 'behavior' },
+  ],
 }

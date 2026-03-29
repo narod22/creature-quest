@@ -205,18 +205,8 @@ function generateExplorerQuestions(species) {
     }
   }
 
-  // Step 2: Extract questions from Wikipedia text (for species without curated facts)
-  if (questions.length < 3) {
-    const extracted = extractFactQuestions(species)
-    for (const eq of extracted) {
-      if (questions.length >= 4) break
-      // Avoid duplicate question types
-      const existingTypes = questions.map((q) => q.id.split('-')[1])
-      if (!existingTypes.includes(eq.id.split('-')[1])) {
-        questions.push(eq)
-      }
-    }
-  }
+  // Step 2: Only use curated facts for quizzes. Wikipedia text extraction is unreliable
+  // and produces wrong answers. If no curated facts, fall back to type question only.
 
   // Step 3: Add one type question if we still need more (but only one, not two)
   if (questions.length < 2 && species.type && species.type !== 'unknown') {
@@ -238,209 +228,7 @@ function generateExplorerQuestions(species) {
   return questions.slice(0, 4) // Max 4 questions per species
 }
 
-/**
- * Extract quiz questions from Wikipedia text.
- * Wrong answers are close to the real answer to make it tricky.
- */
-function extractFactQuestions(species) {
-  const text = species.summary || species.fullText || ''
-  const questions = []
-  if (!text) return questions
 
-  const t = text.toLowerCase()
-
-  // Helper: generate plausible wrong numbers close to the real one
-  function nearbyNumbers(num, unit) {
-    const options = []
-    // Generate numbers that are close but wrong (within 30-80% range)
-    const multipliers = shuffleArray([0.4, 0.6, 0.75, 1.3, 1.5, 1.8, 2.0])
-    for (const m of multipliers) {
-      const wrong = Math.round(num * m)
-      if (wrong !== Math.round(num) && wrong > 0 && !options.includes(wrong)) {
-        options.push(wrong)
-      }
-      if (options.length >= 3) break
-    }
-    // Fallback if we don't have enough
-    while (options.length < 3) {
-      const offset = options.length + 1
-      const wrong = Math.round(num + (num * 0.3 * offset))
-      if (!options.includes(wrong) && wrong !== Math.round(num)) options.push(wrong)
-      else options.push(Math.round(num * (0.3 + options.length * 0.2)))
-    }
-    return options.slice(0, 3).map((n) => `${n} ${unit}`)
-  }
-
-  // Speed questions
-  const speedMatch = text.match(/(\d+[\.\d]*)\s*(mph|km\/h|miles per hour|kilometers per hour)/i)
-  if (speedMatch) {
-    const speed = speedMatch[1]
-    const unit = speedMatch[2].includes('km') ? 'km/h' : 'mph'
-    const num = parseFloat(speed)
-    questions.push({
-      id: 'extracted-speed',
-      question: `How fast can the ${species.title} go?`,
-      image: species.image,
-      funFact: `The ${species.title} can reach speeds of ${speed} ${unit}!`,
-      choices: shuffleArray([
-        { text: `${speed} ${unit}`, correct: true },
-        ...nearbyNumbers(num, unit).map((t) => ({ text: t, correct: false })),
-      ]),
-    })
-  }
-
-  // Size/length questions
-  const sizeMatch = text.match(/(?:up to|reach|grow to|as long as|measuring|length of)\s*(\d+[\.\d]*)\s*(feet|meters|metres|cm|inches|ft|m)\b/i)
-  if (sizeMatch) {
-    const size = sizeMatch[1]
-    const unit = sizeMatch[2]
-    const num = parseFloat(size)
-    questions.push({
-      id: 'extracted-size',
-      question: `How big can the ${species.title} get?`,
-      image: species.image,
-      funFact: `The ${species.title} can reach ${size} ${unit}!`,
-      choices: shuffleArray([
-        { text: `Up to ${size} ${unit}`, correct: true },
-        ...nearbyNumbers(num, unit).map((t) => ({ text: `Up to ${t}`, correct: false })),
-      ]),
-    })
-  }
-
-  // Weight questions
-  const weightMatch = text.match(/(?:weigh|weighing|weight of)\s*(?:up to|about|approximately)?\s*(\d+[\.,\d]*)\s*(kg|pounds|lbs|tons|tonnes|grams|kilograms)/i)
-  if (weightMatch) {
-    const weight = weightMatch[1].replace(',', '')
-    const unit = weightMatch[2]
-    const num = parseFloat(weight)
-    questions.push({
-      id: 'extracted-weight',
-      question: `How much can the ${species.title} weigh?`,
-      image: species.image,
-      funFact: `The ${species.title} can weigh up to ${weight} ${unit}!`,
-      choices: shuffleArray([
-        { text: `About ${weight} ${unit}`, correct: true },
-        ...nearbyNumbers(num, unit).map((t) => ({ text: `About ${t}`, correct: false })),
-      ]),
-    })
-  }
-
-  // Lifespan questions
-  const lifespanMatch = text.match(/(?:live|lifespan|life span)(?:\s+(?:for|up to|about|approximately))?\s*(\d+[\-\d]*)\s*years/i)
-  if (lifespanMatch) {
-    const years = lifespanMatch[1]
-    const num = parseInt(years)
-    questions.push({
-      id: 'extracted-lifespan',
-      question: `How long can the ${species.title} live?`,
-      image: species.image,
-      funFact: `The ${species.title} can live up to ${years} years!`,
-      choices: shuffleArray([
-        { text: `Up to ${years} years`, correct: true },
-        ...nearbyNumbers(num, 'years').map((t) => ({ text: `Up to ${t}`, correct: false })),
-      ]),
-    })
-  }
-
-  // Location/habitat questions
-  const locationMatch = text.match(/(?:found in|native to|endemic to|lives? in)\s+([A-Z][^.,]{3,40})/i)
-  if (locationMatch) {
-    const location = locationMatch[1].trim()
-    const wrongLocations = shuffleArray([
-      'the Sahara Desert', 'Antarctica', 'the Amazon Rainforest',
-      'the Arctic', 'Australia', 'Madagascar', 'the deep ocean',
-      'the Himalayan mountains', 'North America', 'Europe',
-      'Central Africa', 'Southeast Asia', 'the Pacific Islands',
-    ].filter((l) => !location.toLowerCase().includes(l.toLowerCase().replace('the ', '')))).slice(0, 3)
-
-    if (wrongLocations.length >= 2) {
-      questions.push({
-        id: 'extracted-location',
-        question: `Where can you find the ${species.title}?`,
-        image: species.image,
-        funFact: `The ${species.title} is found in ${location}!`,
-        choices: shuffleArray([
-          { text: location, correct: true },
-          ...wrongLocations.map((l) => ({ text: l, correct: false })),
-        ]),
-      })
-    }
-  }
-
-  // Diet questions - more plausible wrong answers
-  if (t.includes('herbivore') || (t.includes('plants') && t.includes('eat'))) {
-    questions.push({
-      id: 'extracted-diet',
-      question: `What does the ${species.title} mainly eat?`,
-      image: species.image,
-      funFact: `The ${species.title} is a plant-eater (herbivore)!`,
-      choices: shuffleArray([
-        { text: 'Plants (herbivore)', correct: true },
-        { text: 'Other animals (carnivore)', correct: false },
-        { text: 'Both plants and animals (omnivore)', correct: false },
-        { text: 'Insects and small invertebrates', correct: false },
-      ]),
-    })
-  } else if (t.includes('carnivore') || (t.includes('prey') && t.includes('hunt'))) {
-    questions.push({
-      id: 'extracted-diet',
-      question: `What does the ${species.title} mainly eat?`,
-      image: species.image,
-      funFact: `The ${species.title} is a meat-eater (carnivore)!`,
-      choices: shuffleArray([
-        { text: 'Other animals (carnivore)', correct: true },
-        { text: 'Plants (herbivore)', correct: false },
-        { text: 'Both plants and animals (omnivore)', correct: false },
-        { text: 'Insects only (insectivore)', correct: false },
-      ]),
-    })
-  } else if (t.includes('omnivore')) {
-    questions.push({
-      id: 'extracted-diet',
-      question: `What does the ${species.title} mainly eat?`,
-      image: species.image,
-      funFact: `The ${species.title} eats both plants and animals (omnivore)!`,
-      choices: shuffleArray([
-        { text: 'Both plants and animals (omnivore)', correct: true },
-        { text: 'Plants only (herbivore)', correct: false },
-        { text: 'Meat only (carnivore)', correct: false },
-        { text: 'Insects only (insectivore)', correct: false },
-      ]),
-    })
-  }
-
-  // Extinct question using proper isExtinct flag
-  if (species.isExtinct === true) {
-    questions.push({
-      id: 'extracted-extinct',
-      question: `Is the ${species.title} still alive today?`,
-      image: species.image,
-      funFact: `The ${species.title} is extinct, but scientists have learned about it from fossils and other evidence!`,
-      choices: [
-        { text: 'No, it is extinct', correct: true },
-        { text: 'Yes, it is still alive', correct: false },
-      ],
-    })
-  }
-
-  // Nocturnal question
-  if (t.includes('nocturnal')) {
-    questions.push({
-      id: 'extracted-nocturnal',
-      question: `When is the ${species.title} most active?`,
-      image: species.image,
-      funFact: `The ${species.title} is nocturnal, meaning it is active at night!`,
-      choices: shuffleArray([
-        { text: 'At night (nocturnal)', correct: true },
-        { text: 'During the day (diurnal)', correct: false },
-        { text: 'At dawn and dusk (crepuscular)', correct: false },
-        { text: 'Both day and night equally', correct: false },
-      ]),
-    })
-  }
-
-  return shuffleArray(questions)
-}
 
 function generateLittleQuestions(species) {
   const questions = []
@@ -484,77 +272,21 @@ function generateLittleQuestions(species) {
 
 /**
  * Generate fun facts for a species detail page.
- * Uses curated facts when available, falls back to Wikipedia extraction.
+ * ONLY uses curated, verified facts. No Wikipedia extraction.
+ * If no curated facts exist, returns an empty array so the UI
+ * can show a friendly "we're still learning" message.
  */
 export function generateKidFacts(details) {
-  const facts = []
-
-  // Step 1: Use curated facts if available (the good stuff)
   const curatedFacts = SPECIES_FACTS[details.title]
-  if (curatedFacts) {
-    facts.push(...curatedFacts.map((f) => f.text))
+  if (curatedFacts && curatedFacts.length > 0) {
+    return curatedFacts.map((f) => f.text)
   }
-
-  // Step 2: ONLY extract from Wikipedia if we have ZERO curated facts.
-  // The Wikipedia text extraction is unreliable and produces garbage like
-  // "found in crocodile stomachs" or "plant-eater" for lions. Curated
-  // facts are verified. Don't contaminate them with bad extraction.
-  if (facts.length === 0) {
-    const extracted = extractWikipediaFacts(details)
-    facts.push(...extracted)
-  }
-
-  if (facts.length < 2) {
-    facts.push('Every species is special and has its own unique features!')
-    facts.push('Scientists discover about 18,000 new species every single year!')
-  }
-
-  const unique = [...new Set(facts)]
-  return unique.slice(0, 8)
+  return []
 }
 
 /**
- * Extract facts from Wikipedia text. ONLY used when no curated facts exist.
- * Conservative: only extracts things we can be reasonably sure about.
+ * Check if a species has curated (verified) facts.
  */
-function extractWikipediaFacts(details) {
-  const text = (details.fullText || details.summary || '').toLowerCase()
-  const sourceText = details.fullText || details.summary || ''
-  // Only look at the first ~500 chars (the intro) to avoid pulling
-  // facts from evolutionary history, predator sections, etc.
-  const intro = sourceText.slice(0, 500)
-  const introLower = intro.toLowerCase()
-  const facts = []
-
-  // Discovery year (only from intro)
-  const describedMatch = intro.match(/(?:described|discovered|first described)(?: by .+?)? in (\d{4})/i)
-  if (describedMatch) {
-    const year = parseInt(describedMatch[1])
-    if (year >= 2020) {
-      facts.push(`Brand new discovery! Scientists described this species in ${year}!`)
-    } else if (year >= 1900) {
-      facts.push(`Scientists first described this species in ${year}!`)
-    }
-  }
-
-  // Extinct status (ONLY from the isExtinct flag, never from text)
-  if (details.isExtinct === true) {
-    facts.push("This animal is extinct, which means it doesn't live on Earth anymore. But scientists found it!")
-  }
-
-  // Diet (only from intro, and only explicit keywords)
-  if (introLower.includes('herbivore')) {
-    facts.push('This animal is a plant-eater!')
-  } else if (introLower.includes('carnivore') || introLower.includes('apex predator')) {
-    facts.push('This is a meat-eater! It hunts other animals for food.')
-  } else if (introLower.includes('omnivore')) {
-    facts.push('This animal eats both plants AND meat!')
-  }
-
-  // Nocturnal (only from intro)
-  if (introLower.includes('nocturnal')) {
-    facts.push('This animal is nocturnal, meaning it sleeps during the day and wakes up at night!')
-  }
-
-  return facts
+export function hasCuratedFacts(title) {
+  return SPECIES_FACTS[title] && SPECIES_FACTS[title].length > 0
 }

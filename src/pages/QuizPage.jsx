@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useApp } from '../context'
 import { browseByCategory } from '../api/wikipedia'
-import { generateQuizQuestions, generateComparisonQuestions } from '../api/quiz'
+import { generateQuizQuestions, generateComparisonQuestions, hasCuratedFacts } from '../api/quiz'
 import { CATEGORIES, shuffleArray } from '../api/helpers'
 import QuizCard from '../components/QuizCard'
 import QuizResults from '../components/QuizResults'
@@ -40,15 +40,15 @@ export default function QuizPage() {
         if (allSpecies.length >= 10) break
       }
 
-      // Generate multiple questions per species + cross-species comparisons
-      const quizSpecies = shuffleArray(allSpecies).slice(0, isLittle ? 5 : 10)
+      // Only use species with curated (verified) facts for the quiz
+      const curatedSpecies = allSpecies.filter((s) => hasCuratedFacts(s.title))
+      const quizSpecies = shuffleArray(curatedSpecies).slice(0, isLittle ? 5 : 10)
       const allQuestions = []
 
-      // Per-species questions: take up to 2 per species (not just 1)
+      // Per-species questions: take up to 2 per species
       for (const species of quizSpecies) {
         const qs = generateQuizQuestions(species, ageMode)
         if (qs.length > 0) {
-          // Take 1-2 questions per species, shuffled so it's not always the same type
           const take = Math.min(qs.length, isLittle ? 1 : 2)
           allQuestions.push(...shuffleArray(qs).slice(0, take))
         }

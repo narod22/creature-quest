@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useApp } from '../context'
 import { getSpeciesDetails } from '../api/wikipedia'
 import { getSpeciesPhotos } from '../api/inaturalist'
-import { generateKidFacts, generateQuizQuestions } from '../api/quiz'
+import { generateKidFacts, generateQuizQuestions, hasCuratedFacts } from '../api/quiz'
 import QuizCard from '../components/QuizCard'
 
 export default function AnimalDetailPage() {
@@ -38,7 +38,12 @@ export default function AnimalDetailPage() {
 
       if (data) {
         setFacts(generateKidFacts(data))
-        setQuizQuestions(generateQuizQuestions(data, ageMode))
+        // Only generate quiz for species with verified curated facts
+        if (hasCuratedFacts(data.title)) {
+          setQuizQuestions(generateQuizQuestions(data, ageMode))
+        } else {
+          setQuizQuestions([])
+        }
 
         // Load photos in parallel
         try {
@@ -191,7 +196,8 @@ export default function AnimalDetailPage() {
               ) : (
                 <div className="text-center py-8">
                   <span className="text-5xl">🔍</span>
-                  <p className="text-gray-500 mt-2">We're still learning about this creature!</p>
+                  <p className="text-gray-500 mt-2 font-semibold">We haven't added verified fun facts for this species yet.</p>
+                  <p className="text-gray-400 mt-1 text-sm">Check the About tab for general info, or explore a different animal!</p>
                 </div>
               )}
             </div>

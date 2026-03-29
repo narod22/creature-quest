@@ -117,16 +117,17 @@ function isActualSpeciesPage(page) {
   ]
   if (badCatPatterns.some((p) => catText.includes(p))) return false
 
+  // Reject obvious non-species page titles
+  const titleLower = title.toLowerCase()
+
   // Reject disambiguation pages
   if (titleLower.includes('(disambiguation)')) return false
   if (extract.startsWith('this is a disambiguation') || extract.includes('may refer to:')) return false
 
-  // Reject obvious non-species page titles
   const badTitlePrefixes = [
     'outline of', 'glossary of', 'list of', 'index of',
     'timeline of', 'history of', 'climate change and',
   ]
-  const titleLower = title.toLowerCase()
   if (badTitlePrefixes.some((p) => titleLower.startsWith(p))) return false
 
   // Reject topic/concept/object articles by title patterns

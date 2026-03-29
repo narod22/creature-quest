@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useApp } from '../context'
 import { browseByCategory } from '../api/wikipedia'
-import { generateQuizQuestions } from '../api/quiz'
+import { generateQuizQuestions, generateComparisonQuestions } from '../api/quiz'
 import { CATEGORIES, shuffleArray } from '../api/helpers'
 import QuizCard from '../components/QuizCard'
 import QuizResults from '../components/QuizResults'
@@ -40,18 +40,29 @@ export default function QuizPage() {
         if (allSpecies.length >= 10) break
       }
 
-      // Generate one question per species
-      const quizSpecies = shuffleArray(allSpecies).slice(0, isLittle ? 5 : 8)
+      // Generate multiple questions per species + cross-species comparisons
+      const quizSpecies = shuffleArray(allSpecies).slice(0, isLittle ? 5 : 10)
       const allQuestions = []
 
+      // Per-species questions: take up to 2 per species (not just 1)
       for (const species of quizSpecies) {
         const qs = generateQuizQuestions(species, ageMode)
         if (qs.length > 0) {
-          allQuestions.push(qs[0]) // Take the first (best) question
+          // Take 1-2 questions per species, shuffled so it's not always the same type
+          const take = Math.min(qs.length, isLittle ? 1 : 2)
+          allQuestions.push(...shuffleArray(qs).slice(0, take))
         }
       }
 
-      setQuestions(allQuestions)
+      // Cross-species comparison questions (the hard ones)
+      if (!isLittle) {
+        const comparisons = generateComparisonQuestions(quizSpecies, ageMode)
+        allQuestions.push(...comparisons.slice(0, 4))
+      }
+
+      // Shuffle everything and cap at a good quiz length
+      const maxQuestions = isLittle ? 5 : 12
+      setQuestions(shuffleArray(allQuestions).slice(0, maxQuestions))
     } catch (e) {
       console.error('Failed to load quiz:', e)
       setQuestions([])

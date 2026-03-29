@@ -16,6 +16,173 @@ export function generateQuizQuestions(species, mode = 'explorer') {
   return generateExplorerQuestions(species)
 }
 
+/**
+ * Generate cross-species comparison questions from multiple species.
+ * These are the hard ones: "Which animal is faster?", "Which is NOT a mammal?"
+ * Requires knowledge across species, not just reading one card.
+ */
+export function generateComparisonQuestions(speciesList, mode = 'explorer') {
+  if (mode === 'little') return []
+  const questions = []
+
+  // Build lookup of species with curated facts
+  const withFacts = speciesList.filter((s) => SPECIES_FACTS[s.title]?.length > 0)
+
+  // "Which is faster?" using speed facts
+  const speedAnimals = []
+  for (const s of withFacts) {
+    const facts = SPECIES_FACTS[s.title]
+    const speedFact = facts.find((f) => f.category === 'speed')
+    if (speedFact) {
+      const numMatch = speedFact.a.match(/(\d+[\.,\d]*)/)
+      if (numMatch) speedAnimals.push({ species: s, speed: parseFloat(numMatch[1].replace(',', '')), fact: speedFact })
+    }
+  }
+  if (speedAnimals.length >= 3) {
+    const sorted = speedAnimals.sort((a, b) => b.speed - a.speed)
+    const fastest = sorted[0]
+    const others = shuffleArray(sorted.slice(1)).slice(0, 3)
+    questions.push({
+      id: 'compare-speed',
+      question: `Which of these animals is the fastest?`,
+      funFact: `${fastest.species.title} can reach ${fastest.fact.a}!`,
+      choices: shuffleArray([
+        { text: fastest.species.title, correct: true },
+        ...others.map((o) => ({ text: o.species.title, correct: false })),
+      ]),
+    })
+  }
+
+  // "Which is NOT a mammal?" - tricky classification
+  const mammals = speciesList.filter((s) => s.type === 'mammal')
+  const nonMammals = speciesList.filter((s) => s.type && s.type !== 'mammal' && s.type !== 'unknown')
+  if (nonMammals.length >= 1 && mammals.length >= 3) {
+    const oddOne = shuffleArray(nonMammals)[0]
+    const decoys = shuffleArray(mammals).slice(0, 3)
+    questions.push({
+      id: 'compare-not-mammal',
+      question: `Which of these is NOT a mammal?`,
+      funFact: `${oddOne.title} is actually ${oddOne.typeLabel ? oddOne.typeLabel.toLowerCase().startsWith('a') ? 'an' : 'a' : 'a'} ${(oddOne.typeLabel || oddOne.type)}!`,
+      choices: shuffleArray([
+        { text: oddOne.title, correct: true },
+        ...decoys.map((d) => ({ text: d.title, correct: false })),
+      ]),
+    })
+  }
+
+  // "Which of these lays eggs?" - tricky for mammals like platypus
+  const eggLayers = speciesList.filter((s) => ['bird', 'reptile', 'amphibian', 'fish', 'insect', 'arachnid'].includes(s.type))
+  const noEggs = speciesList.filter((s) => s.type === 'mammal')
+  if (eggLayers.length >= 1 && noEggs.length >= 2) {
+    const correct = shuffleArray(eggLayers)[0]
+    const wrongs = shuffleArray(noEggs).slice(0, 3)
+    if (wrongs.length >= 2) {
+      questions.push({
+        id: 'compare-eggs',
+        question: `Which of these animals lays eggs?`,
+        funFact: `Most ${correct.typeLabel || correct.type}s lay eggs!`,
+        choices: shuffleArray([
+          { text: correct.title, correct: true },
+          ...wrongs.map((w) => ({ text: w.title, correct: false })),
+        ]),
+      })
+    }
+  }
+
+  // "Which animal can live the longest?" using lifespan facts
+  const lifespanAnimals = []
+  for (const s of withFacts) {
+    const facts = SPECIES_FACTS[s.title]
+    const lifeFact = facts.find((f) => f.category === 'lifespan')
+    if (lifeFact) {
+      const numMatch = lifeFact.a.match(/(\d+[\.,\d]*)/)
+      if (numMatch) lifespanAnimals.push({ species: s, years: parseFloat(numMatch[1].replace(',', '')), fact: lifeFact })
+    }
+  }
+  if (lifespanAnimals.length >= 3) {
+    const sorted = lifespanAnimals.sort((a, b) => b.years - a.years)
+    const longest = sorted[0]
+    const others = shuffleArray(sorted.slice(1)).slice(0, 3)
+    questions.push({
+      id: 'compare-lifespan',
+      question: `Which of these animals can live the longest?`,
+      funFact: `${longest.species.title} can live ${longest.fact.a}!`,
+      choices: shuffleArray([
+        { text: longest.species.title, correct: true },
+        ...others.map((o) => ({ text: o.species.title, correct: false })),
+      ]),
+    })
+  }
+
+  // "Which of these facts is TRUE?" - mix real facts with plausible fakes
+  if (withFacts.length >= 2) {
+    const picked = shuffleArray(withFacts)[0]
+    const realFact = shuffleArray(SPECIES_FACTS[picked.title])[0]
+    const fakeFacts = shuffleArray([
+      `${picked.title}s can breathe underwater for up to 3 hours`,
+      `${picked.title}s have been trained to deliver mail`,
+      `${picked.title}s can see ultraviolet and infrared light`,
+      `${picked.title}s hibernate for 6 months every year`,
+      `${picked.title}s communicate using ultrasonic clicks humans can't hear`,
+      `Baby ${picked.title.toLowerCase()}s can walk within 10 minutes of being born`,
+      `${picked.title}s have four stomachs to digest their food`,
+      `${picked.title}s shed their skin completely every two weeks`,
+    ]).slice(0, 3)
+
+    questions.push({
+      id: 'compare-true-fact',
+      question: `Which fact about the ${picked.title} is actually TRUE?`,
+      image: picked.image,
+      funFact: realFact.text,
+      choices: shuffleArray([
+        { text: realFact.text, correct: true },
+        ...fakeFacts.map((f) => ({ text: f, correct: false })),
+      ]),
+    })
+  }
+
+  // "Which animal does NOT live in [region]?" using habitat facts
+  const habitatAnimals = []
+  for (const s of withFacts) {
+    const facts = SPECIES_FACTS[s.title]
+    const habFact = facts.find((f) => f.category === 'habitat')
+    if (habFact) habitatAnimals.push({ species: s, fact: habFact })
+  }
+  if (habitatAnimals.length >= 2) {
+    // Find one that lives somewhere specific, then ask about animals that DON'T live there
+    const anchor = shuffleArray(habitatAnimals)[0]
+    const locationMatch = anchor.fact.a.match(/(Antarctica|Arctic|Africa|Asia|Australia|South America|North America|Europe|Madagascar|ocean)/)
+    if (locationMatch) {
+      const location = locationMatch[1]
+      const liveThere = [anchor]
+      const dontLiveThere = habitatAnimals.filter((h) => {
+        const theirLocation = h.fact.a
+        return !theirLocation.toLowerCase().includes(location.toLowerCase())
+      })
+      if (dontLiveThere.length >= 1 && liveThere.length >= 1) {
+        const wrong = shuffleArray(dontLiveThere)[0]
+        const decoys = shuffleArray(liveThere.concat(
+          habitatAnimals.filter((h) => h !== wrong && h !== anchor)
+        )).slice(0, 2)
+        if (decoys.length >= 2) {
+          questions.push({
+            id: 'compare-habitat',
+            question: `Which of these does NOT live in or near ${location}?`,
+            funFact: `${wrong.species.title} actually lives in ${wrong.fact.a}!`,
+            choices: shuffleArray([
+              { text: wrong.species.title, correct: true },
+              { text: anchor.species.title, correct: false },
+              ...decoys.map((d) => ({ text: d.species.title, correct: false })),
+            ]).slice(0, 4),
+          })
+        }
+      }
+    }
+  }
+
+  return shuffleArray(questions)
+}
+
 function generateExplorerQuestions(species) {
   const questions = []
 
@@ -73,8 +240,7 @@ function generateExplorerQuestions(species) {
 
 /**
  * Extract quiz questions from Wikipedia text.
- * Looks for specific numbers, measurements, locations, and behaviors
- * that can be turned into interesting questions.
+ * Wrong answers are close to the real answer to make it tricky.
  */
 function extractFactQuestions(species) {
   const text = species.summary || species.fullText || ''
@@ -82,6 +248,28 @@ function extractFactQuestions(species) {
   if (!text) return questions
 
   const t = text.toLowerCase()
+
+  // Helper: generate plausible wrong numbers close to the real one
+  function nearbyNumbers(num, unit) {
+    const options = []
+    // Generate numbers that are close but wrong (within 30-80% range)
+    const multipliers = shuffleArray([0.4, 0.6, 0.75, 1.3, 1.5, 1.8, 2.0])
+    for (const m of multipliers) {
+      const wrong = Math.round(num * m)
+      if (wrong !== Math.round(num) && wrong > 0 && !options.includes(wrong)) {
+        options.push(wrong)
+      }
+      if (options.length >= 3) break
+    }
+    // Fallback if we don't have enough
+    while (options.length < 3) {
+      const offset = options.length + 1
+      const wrong = Math.round(num + (num * 0.3 * offset))
+      if (!options.includes(wrong) && wrong !== Math.round(num)) options.push(wrong)
+      else options.push(Math.round(num * (0.3 + options.length * 0.2)))
+    }
+    return options.slice(0, 3).map((n) => `${n} ${unit}`)
+  }
 
   // Speed questions
   const speedMatch = text.match(/(\d+[\.\d]*)\s*(mph|km\/h|miles per hour|kilometers per hour)/i)
@@ -96,9 +284,7 @@ function extractFactQuestions(species) {
       funFact: `The ${species.title} can reach speeds of ${speed} ${unit}!`,
       choices: shuffleArray([
         { text: `${speed} ${unit}`, correct: true },
-        { text: `${Math.round(num * 0.3)} ${unit}`, correct: false },
-        { text: `${Math.round(num * 2.5)} ${unit}`, correct: false },
-        { text: `${Math.round(num * 0.6)} ${unit}`, correct: false },
+        ...nearbyNumbers(num, unit).map((t) => ({ text: t, correct: false })),
       ]),
     })
   }
@@ -116,9 +302,7 @@ function extractFactQuestions(species) {
       funFact: `The ${species.title} can reach ${size} ${unit}!`,
       choices: shuffleArray([
         { text: `Up to ${size} ${unit}`, correct: true },
-        { text: `Up to ${Math.round(num * 0.2)} ${unit}`, correct: false },
-        { text: `Up to ${Math.round(num * 3)} ${unit}`, correct: false },
-        { text: `Up to ${Math.round(num * 0.5)} ${unit}`, correct: false },
+        ...nearbyNumbers(num, unit).map((t) => ({ text: `Up to ${t}`, correct: false })),
       ]),
     })
   }
@@ -136,9 +320,7 @@ function extractFactQuestions(species) {
       funFact: `The ${species.title} can weigh up to ${weight} ${unit}!`,
       choices: shuffleArray([
         { text: `About ${weight} ${unit}`, correct: true },
-        { text: `About ${Math.round(num * 0.1)} ${unit}`, correct: false },
-        { text: `About ${Math.round(num * 5)} ${unit}`, correct: false },
-        { text: `About ${Math.round(num * 0.4)} ${unit}`, correct: false },
+        ...nearbyNumbers(num, unit).map((t) => ({ text: `About ${t}`, correct: false })),
       ]),
     })
   }
@@ -155,9 +337,7 @@ function extractFactQuestions(species) {
       funFact: `The ${species.title} can live up to ${years} years!`,
       choices: shuffleArray([
         { text: `Up to ${years} years`, correct: true },
-        { text: `About ${Math.max(1, Math.round(num * 0.2))} years`, correct: false },
-        { text: `About ${Math.round(num * 4)} years`, correct: false },
-        { text: `About ${Math.round(num * 0.5)} years`, correct: false },
+        ...nearbyNumbers(num, 'years').map((t) => ({ text: `Up to ${t}`, correct: false })),
       ]),
     })
   }
@@ -170,6 +350,7 @@ function extractFactQuestions(species) {
       'the Sahara Desert', 'Antarctica', 'the Amazon Rainforest',
       'the Arctic', 'Australia', 'Madagascar', 'the deep ocean',
       'the Himalayan mountains', 'North America', 'Europe',
+      'Central Africa', 'Southeast Asia', 'the Pacific Islands',
     ].filter((l) => !location.toLowerCase().includes(l.toLowerCase().replace('the ', '')))).slice(0, 3)
 
     if (wrongLocations.length >= 2) {
@@ -186,44 +367,44 @@ function extractFactQuestions(species) {
     }
   }
 
-  // Diet questions
+  // Diet questions - more plausible wrong answers
   if (t.includes('herbivore') || (t.includes('plants') && t.includes('eat'))) {
     questions.push({
       id: 'extracted-diet',
-      question: `What does the ${species.title} eat?`,
+      question: `What does the ${species.title} mainly eat?`,
       image: species.image,
-      funFact: `The ${species.title} is a plant-eater!`,
+      funFact: `The ${species.title} is a plant-eater (herbivore)!`,
       choices: shuffleArray([
-        { text: '🌿 Plants', correct: true },
-        { text: '🥩 Other animals', correct: false },
-        { text: '🍄 Fungi only', correct: false },
-        { text: '🪨 Rocks and minerals', correct: false },
+        { text: 'Plants (herbivore)', correct: true },
+        { text: 'Other animals (carnivore)', correct: false },
+        { text: 'Both plants and animals (omnivore)', correct: false },
+        { text: 'Insects and small invertebrates', correct: false },
       ]),
     })
   } else if (t.includes('carnivore') || (t.includes('prey') && t.includes('hunt'))) {
     questions.push({
       id: 'extracted-diet',
-      question: `What does the ${species.title} eat?`,
+      question: `What does the ${species.title} mainly eat?`,
       image: species.image,
-      funFact: `The ${species.title} is a meat-eater!`,
+      funFact: `The ${species.title} is a meat-eater (carnivore)!`,
       choices: shuffleArray([
-        { text: '🥩 Other animals', correct: true },
-        { text: '🌿 Plants only', correct: false },
-        { text: '🍯 Honey and nectar', correct: false },
-        { text: '🪨 Rocks and minerals', correct: false },
+        { text: 'Other animals (carnivore)', correct: true },
+        { text: 'Plants (herbivore)', correct: false },
+        { text: 'Both plants and animals (omnivore)', correct: false },
+        { text: 'Insects only (insectivore)', correct: false },
       ]),
     })
   } else if (t.includes('omnivore')) {
     questions.push({
       id: 'extracted-diet',
-      question: `What does the ${species.title} eat?`,
+      question: `What does the ${species.title} mainly eat?`,
       image: species.image,
-      funFact: `The ${species.title} eats both plants and animals!`,
+      funFact: `The ${species.title} eats both plants and animals (omnivore)!`,
       choices: shuffleArray([
-        { text: '🌿🥩 Both plants and animals', correct: true },
-        { text: '🌿 Plants only', correct: false },
-        { text: '🥩 Meat only', correct: false },
-        { text: '🍄 Fungi only', correct: false },
+        { text: 'Both plants and animals (omnivore)', correct: true },
+        { text: 'Plants only (herbivore)', correct: false },
+        { text: 'Meat only (carnivore)', correct: false },
+        { text: 'Insects only (insectivore)', correct: false },
       ]),
     })
   }
@@ -250,9 +431,10 @@ function extractFactQuestions(species) {
       image: species.image,
       funFact: `The ${species.title} is nocturnal, meaning it is active at night!`,
       choices: shuffleArray([
-        { text: '🌙 At night (nocturnal)', correct: true },
-        { text: '☀️ During the day', correct: false },
-        { text: '🌅 Only at sunset', correct: false },
+        { text: 'At night (nocturnal)', correct: true },
+        { text: 'During the day (diurnal)', correct: false },
+        { text: 'At dawn and dusk (crepuscular)', correct: false },
+        { text: 'Both day and night equally', correct: false },
       ]),
     })
   }

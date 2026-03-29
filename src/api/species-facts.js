@@ -16,13 +16,13 @@ export const SPECIES_FACTS = {
   // ── Mammals ──────────────────────────────────────────────────────
   'African elephant': [
     { text: 'African elephants are the largest land animals on Earth.', q: 'What is the largest land animal on Earth?', a: 'African elephant', wrong: ['Blue whale', 'Giraffe', 'Hippopotamus'], category: 'size' },
-    { text: 'An elephant can drink up to 50 gallons of water a day.', q: 'How much water can an elephant drink per day?', a: 'Up to 50 gallons', wrong: ['Up to 5 gallons', 'Up to 10 gallons', 'Up to 100 gallons'], category: 'diet' },
+    { text: 'An elephant can drink up to 50 gallons of water a day.', q: 'How much water can an elephant drink per day?', a: 'Up to 50 gallons', wrong: ['Up to 25 gallons', 'Up to 75 gallons', 'Up to 35 gallons'], category: 'diet' },
     { text: 'Elephants can recognize themselves in a mirror, which very few animals can do.', q: 'What special thing can elephants do with a mirror?', a: 'Recognize themselves', wrong: ['Get scared', 'Ignore it completely', 'Try to fight it'], category: 'ability' },
   ],
   'Blue whale': [
     { text: 'The blue whale is the largest animal that has ever lived on Earth, even bigger than any dinosaur.', q: 'Is the blue whale bigger than any dinosaur that ever lived?', a: 'Yes, it is the biggest animal ever', wrong: ['No, T. rex was bigger', 'No, Brachiosaurus was bigger', 'They were about the same size'], category: 'size' },
     { text: 'A blue whale\'s heart is about the size of a small car.', q: 'How big is a blue whale\'s heart?', a: 'About the size of a small car', wrong: ['About the size of a basketball', 'About the size of a watermelon', 'About the size of a football'], category: 'body' },
-    { text: 'Blue whales can be heard from over 1,000 miles away.', q: 'How far away can a blue whale be heard?', a: 'Over 1,000 miles', wrong: ['About 10 miles', 'About 100 miles', 'About 1 mile'], category: 'ability' },
+    { text: 'Blue whales can be heard from over 1,000 miles away.', q: 'How far away can a blue whale be heard?', a: 'Over 1,000 miles', wrong: ['About 500 miles', 'About 100 miles', 'About 2,000 miles'], category: 'ability' },
   ],
   'Red fox': [
     { text: 'Red foxes can hear a mouse digging underground from over 100 feet away.', q: 'What amazing thing can a red fox hear?', a: 'A mouse digging underground', wrong: ['A bird flying overhead', 'A fish swimming', 'Thunder from 50 miles away'], category: 'ability' },
@@ -30,22 +30,22 @@ export const SPECIES_FACTS = {
     { text: 'A fox\'s tail is called a "brush" and helps them balance.', q: 'What is a fox\'s tail called?', a: 'A brush', wrong: ['A flag', 'A rudder', 'A whip'], category: 'body' },
   ],
   'Gray wolf': [
-    { text: 'Wolves can run up to 40 miles per hour when chasing prey.', q: 'How fast can a wolf run?', a: 'Up to 40 mph', wrong: ['Up to 10 mph', 'Up to 70 mph', 'Up to 20 mph'], category: 'speed' },
-    { text: 'A wolf\'s howl can be heard up to 10 miles away.', q: 'How far away can a wolf\'s howl be heard?', a: 'Up to 10 miles', wrong: ['Up to 100 feet', 'Up to 1 mile', 'Up to 50 miles'], category: 'ability' },
+    { text: 'Wolves can run up to 40 miles per hour when chasing prey.', q: 'How fast can a wolf run?', a: 'Up to 40 mph', wrong: ['Up to 25 mph', 'Up to 55 mph', 'Up to 30 mph'], category: 'speed' },
+    { text: 'A wolf\'s howl can be heard up to 10 miles away.', q: 'How far away can a wolf\'s howl be heard?', a: 'Up to 10 miles', wrong: ['Up to 5 miles', 'Up to 3 miles', 'Up to 20 miles'], category: 'ability' },
     { text: 'Wolves live and hunt in family groups called packs.', q: 'What is a group of wolves called?', a: 'A pack', wrong: ['A herd', 'A flock', 'A school'], category: 'behavior' },
   ],
   'Lion': [
-    { text: 'A lion\'s roar can be heard from 5 miles away.', q: 'How far away can you hear a lion roar?', a: '5 miles', wrong: ['50 feet', 'Half a mile', '50 miles'], category: 'ability' },
+    { text: 'A lion\'s roar can be heard from 5 miles away.', q: 'How far away can you hear a lion roar?', a: '5 miles', wrong: ['2 miles', '8 miles', '1 mile'], category: 'ability' },
     { text: 'Lions are the only cats that live in groups, called prides.', q: 'What is a group of lions called?', a: 'A pride', wrong: ['A pack', 'A herd', 'A colony'], category: 'behavior' },
     { text: 'Lions sleep up to 20 hours a day.', q: 'How many hours a day do lions sleep?', a: 'Up to 20 hours', wrong: ['About 8 hours', 'About 4 hours', 'About 12 hours'], category: 'behavior' },
   ],
   'Cheetah': [
-    { text: 'The cheetah is the fastest land animal, reaching speeds of 70 miles per hour.', q: 'How fast can a cheetah run?', a: 'Up to 70 mph', wrong: ['Up to 30 mph', 'Up to 50 mph', 'Up to 100 mph'], category: 'speed' },
-    { text: 'A cheetah can go from 0 to 60 mph in just 3 seconds, faster than most sports cars.', q: 'How fast can a cheetah accelerate to 60 mph?', a: '3 seconds', wrong: ['10 seconds', '30 seconds', '1 minute'], category: 'speed' },
+    { text: 'The cheetah is the fastest land animal, reaching speeds of 70 miles per hour.', q: 'How fast can a cheetah run?', a: 'Up to 70 mph', wrong: ['Up to 50 mph', 'Up to 60 mph', 'Up to 80 mph'], category: 'speed' },
+    { text: 'A cheetah can go from 0 to 60 mph in just 3 seconds, faster than most sports cars.', q: 'How fast can a cheetah accelerate to 60 mph?', a: '3 seconds', wrong: ['5 seconds', '7 seconds', '1 second'], category: 'speed' },
     { text: 'Cheetahs are the only big cats that cannot roar. They chirp and purr instead.', q: 'What sound does a cheetah make instead of roaring?', a: 'Chirps and purrs', wrong: ['Barks', 'Hisses', 'Screams'], category: 'ability' },
   ],
   'Giant panda': [
-    { text: 'Giant pandas eat bamboo for about 12 hours every single day.', q: 'How many hours a day do pandas spend eating bamboo?', a: 'About 12 hours', wrong: ['About 2 hours', 'About 30 minutes', 'About 6 hours'], category: 'diet' },
+    { text: 'Giant pandas eat bamboo for about 12 hours every single day.', q: 'How many hours a day do pandas spend eating bamboo?', a: 'About 12 hours', wrong: ['About 8 hours', 'About 16 hours', 'About 6 hours'], category: 'diet' },
     { text: 'A newborn panda is about the size of a stick of butter.', q: 'How big is a newborn panda?', a: 'About the size of a stick of butter', wrong: ['About the size of a basketball', 'About the size of a cat', 'About the size of a watermelon'], category: 'size' },
     { text: 'Pandas have a special wrist bone that works like a thumb to grip bamboo.', q: 'What special body part helps pandas grip bamboo?', a: 'A special wrist bone like a thumb', wrong: ['Extra-long claws', 'Sticky paws', 'A suction cup tongue'], category: 'body' },
   ],
@@ -61,7 +61,7 @@ export const SPECIES_FACTS = {
   ],
   'Polar bear': [
     { text: 'A polar bear\'s fur looks white, but each hair is actually hollow and transparent.', q: 'What is special about polar bear fur?', a: 'Each hair is actually hollow and transparent', wrong: ['It is waterproof metal', 'It changes color in summer', 'It glows in the dark'], category: 'body' },
-    { text: 'Polar bears can smell a seal on the ice from 20 miles away.', q: 'How far away can a polar bear smell a seal?', a: '20 miles', wrong: ['20 feet', '200 feet', '2 miles'], category: 'ability' },
+    { text: 'Polar bears can smell a seal on the ice from 20 miles away.', q: 'How far away can a polar bear smell a seal?', a: '20 miles', wrong: ['10 miles', '5 miles', '30 miles'], category: 'ability' },
     { text: 'Under their white fur, polar bears have black skin to absorb heat from the sun.', q: 'What color is a polar bear\'s skin under its fur?', a: 'Black', wrong: ['White', 'Pink', 'Brown'], category: 'body' },
   ],
   'Koala': [
@@ -79,30 +79,30 @@ export const SPECIES_FACTS = {
   ],
   'Narwhal': [
     { text: 'A narwhal\'s "horn" is actually a giant tooth that can grow up to 10 feet long.', q: 'What is a narwhal\'s horn actually made of?', a: 'It is a giant tooth', wrong: ['It is made of bone', 'It is made of hair', 'It is made of cartilage'], category: 'body' },
-    { text: 'Narwhals can dive over 5,000 feet deep in the Arctic Ocean.', q: 'How deep can a narwhal dive?', a: 'Over 5,000 feet', wrong: ['About 50 feet', 'About 500 feet', 'About 100 feet'], category: 'ability' },
+    { text: 'Narwhals can dive over 5,000 feet deep in the Arctic Ocean.', q: 'How deep can a narwhal dive?', a: 'Over 5,000 feet', wrong: ['About 3,000 feet', 'About 8,000 feet', 'About 2,000 feet'], category: 'ability' },
   ],
   'Capybara': [
     { text: 'The capybara is the largest rodent in the world, weighing up to 140 pounds.', q: 'What is the largest rodent in the world?', a: 'The capybara', wrong: ['The beaver', 'The porcupine', 'The guinea pig'], category: 'size' },
-    { text: 'Capybaras are excellent swimmers and can hold their breath underwater for up to 5 minutes.', q: 'How long can a capybara hold its breath underwater?', a: 'Up to 5 minutes', wrong: ['About 10 seconds', 'About 30 seconds', 'Up to 30 minutes'], category: 'ability' },
+    { text: 'Capybaras are excellent swimmers and can hold their breath underwater for up to 5 minutes.', q: 'How long can a capybara hold its breath underwater?', a: 'Up to 5 minutes', wrong: ['Up to 2 minutes', 'Up to 8 minutes', 'Up to 1 minute'], category: 'ability' },
   ],
 
   // ── Birds ────────────────────────────────────────────────────────
   'Bald eagle': [
-    { text: 'Bald eagles can see fish swimming from over a mile away.', q: 'How far away can a bald eagle spot a fish?', a: 'Over a mile', wrong: ['About 10 feet', 'About 100 yards', 'About 50 feet'], category: 'ability' },
-    { text: 'A bald eagle\'s nest can weigh as much as a car, over 2 tons.', q: 'How heavy can a bald eagle\'s nest get?', a: 'Over 2 tons (as much as a car)', wrong: ['About 5 pounds', 'About 50 pounds', 'About 200 pounds'], category: 'size' },
+    { text: 'Bald eagles can see fish swimming from over a mile away.', q: 'How far away can a bald eagle spot a fish?', a: 'Over a mile', wrong: ['About half a mile', 'About 2 miles', 'About a quarter mile'], category: 'ability' },
+    { text: 'A bald eagle\'s nest can weigh as much as a car, over 2 tons.', q: 'How heavy can a bald eagle\'s nest get?', a: 'Over 2 tons (as much as a car)', wrong: ['About 500 pounds', 'About 200 pounds', 'About 1 ton'], category: 'size' },
   ],
   'Peregrine falcon': [
     { text: 'The peregrine falcon is the fastest animal on Earth, diving at over 240 mph.', q: 'What is the fastest animal on Earth?', a: 'Peregrine falcon', wrong: ['Cheetah', 'Sailfish', 'Golden eagle'], category: 'speed' },
     { text: 'Peregrine falcons live on every continent except Antarctica.', q: 'Which continent do peregrine falcons NOT live on?', a: 'Antarctica', wrong: ['Australia', 'Africa', 'South America'], category: 'habitat' },
   ],
   'Emperor penguin': [
-    { text: 'Emperor penguins can hold their breath for over 20 minutes while diving.', q: 'How long can an emperor penguin hold its breath?', a: 'Over 20 minutes', wrong: ['About 30 seconds', 'About 2 minutes', 'About 5 minutes'], category: 'ability' },
+    { text: 'Emperor penguins can hold their breath for over 20 minutes while diving.', q: 'How long can an emperor penguin hold its breath?', a: 'Over 20 minutes', wrong: ['About 10 minutes', 'About 30 minutes', 'About 5 minutes'], category: 'ability' },
     { text: 'Male emperor penguins keep the egg warm on their feet for 2 months without eating.', q: 'How do male emperor penguins keep their egg warm?', a: 'On their feet for 2 months', wrong: ['In a nest made of ice', 'Under their wings', 'By sitting in warm water'], category: 'behavior' },
   ],
   'Hummingbird': [
-    { text: 'Hummingbirds can flap their wings up to 80 times per second.', q: 'How fast can a hummingbird flap its wings?', a: 'Up to 80 times per second', wrong: ['About 5 times per second', 'About 20 times per second', 'About 200 times per second'], category: 'speed' },
+    { text: 'Hummingbirds can flap their wings up to 80 times per second.', q: 'How fast can a hummingbird flap its wings?', a: 'Up to 80 times per second', wrong: ['About 50 times per second', 'About 120 times per second', 'About 40 times per second'], category: 'speed' },
     { text: 'Hummingbirds are the only birds that can fly backwards.', q: 'What can hummingbirds do that no other bird can?', a: 'Fly backwards', wrong: ['Fly upside down', 'Fly in circles', 'Fly without flapping'], category: 'ability' },
-    { text: 'A hummingbird\'s heart beats over 1,000 times per minute.', q: 'How fast does a hummingbird\'s heart beat?', a: 'Over 1,000 times per minute', wrong: ['About 70 times per minute', 'About 200 times per minute', 'About 500 times per minute'], category: 'body' },
+    { text: 'A hummingbird\'s heart beats over 1,000 times per minute.', q: 'How fast does a hummingbird\'s heart beat?', a: 'Over 1,000 times per minute', wrong: ['About 600 times per minute', 'About 1,500 times per minute', 'About 800 times per minute'], category: 'body' },
   ],
 
   // ── Reptiles ─────────────────────────────────────────────────────
@@ -128,7 +128,7 @@ export const SPECIES_FACTS = {
   // ── Fish ──────────────────────────────────────────────────────────
   'Great white shark': [
     { text: 'Great white sharks can detect a single drop of blood in 25 gallons of water.', q: 'How sensitive is a great white shark\'s sense of smell?', a: 'Can detect one drop of blood in 25 gallons', wrong: ['Can only smell blood up close', 'About the same as humans', 'Cannot smell at all'], category: 'ability' },
-    { text: 'Great white sharks have about 300 teeth arranged in rows.', q: 'How many teeth does a great white shark have?', a: 'About 300', wrong: ['About 30', 'About 50', 'About 1,000'], category: 'body' },
+    { text: 'Great white sharks have about 300 teeth arranged in rows.', q: 'How many teeth does a great white shark have?', a: 'About 300', wrong: ['About 200', 'About 500', 'About 150'], category: 'body' },
   ],
   'Seahorse': [
     { text: 'Male seahorses are the ones who get pregnant and give birth, not the females.', q: 'Which seahorse parent gives birth to babies?', a: 'The father', wrong: ['The mother', 'Both parents', 'Neither, eggs hatch on their own'], category: 'behavior' },
@@ -163,12 +163,12 @@ export const SPECIES_FACTS = {
   // ── Dinosaurs ────────────────────────────────────────────────────
   'Tyrannosaurus': [
     { text: 'T. rex had the most powerful bite of any land animal ever, strong enough to crush bone.', q: 'What was special about a T. rex bite?', a: 'The most powerful bite of any land animal ever', wrong: ['It was actually quite weak', 'About the same as a lion', 'It had no teeth'], category: 'ability' },
-    { text: 'A T. rex tooth could be up to 12 inches long, about the size of a banana.', q: 'How big was a T. rex tooth?', a: 'Up to 12 inches (size of a banana)', wrong: ['About 1 inch', 'About 3 inches', 'About 3 feet'], category: 'body' },
-    { text: 'T. rex arms were tiny but could still lift about 400 pounds each.', q: 'How much could a T. rex arm lift?', a: 'About 400 pounds', wrong: ['Almost nothing', 'About 5 pounds', 'About 5,000 pounds'], category: 'body' },
+    { text: 'A T. rex tooth could be up to 12 inches long, about the size of a banana.', q: 'How big was a T. rex tooth?', a: 'Up to 12 inches (size of a banana)', wrong: ['About 6 inches', 'About 18 inches', 'About 4 inches'], category: 'body' },
+    { text: 'T. rex arms were tiny but could still lift about 400 pounds each.', q: 'How much could a T. rex arm lift?', a: 'About 400 pounds', wrong: ['About 200 pounds', 'About 100 pounds', 'About 600 pounds'], category: 'body' },
   ],
   'Triceratops': [
-    { text: 'Triceratops had a skull up to 7 feet long, one of the largest of any land animal.', q: 'How long was a Triceratops skull?', a: 'Up to 7 feet', wrong: ['About 1 foot', 'About 3 feet', 'About 15 feet'], category: 'size' },
-    { text: 'Triceratops had between 400 and 800 teeth packed into its jaws.', q: 'How many teeth did a Triceratops have?', a: '400 to 800', wrong: ['About 20', 'About 50', 'About 100'], category: 'body' },
+    { text: 'Triceratops had a skull up to 7 feet long, one of the largest of any land animal.', q: 'How long was a Triceratops skull?', a: 'Up to 7 feet', wrong: ['About 4 feet', 'About 10 feet', 'About 5 feet'], category: 'size' },
+    { text: 'Triceratops had between 400 and 800 teeth packed into its jaws.', q: 'How many teeth did a Triceratops have?', a: '400 to 800', wrong: ['About 100 to 200', 'About 50 to 100', 'Over 1,000'], category: 'body' },
   ],
   'Velociraptor': [
     { text: 'Real velociraptors were only about the size of a turkey, much smaller than in the movies.', q: 'How big was a real velociraptor?', a: 'About the size of a turkey', wrong: ['About the size of a horse', 'Taller than a human', 'About the size of a bus'], category: 'size' },
@@ -177,7 +177,7 @@ export const SPECIES_FACTS = {
 
   // ── Insects ───────────────────────────────────────────────────────
   'Monarch butterfly': [
-    { text: 'Monarch butterflies migrate up to 3,000 miles from Canada to Mexico every year.', q: 'How far do monarch butterflies migrate?', a: 'Up to 3,000 miles', wrong: ['About 10 miles', 'About 100 miles', 'They do not migrate'], category: 'behavior' },
+    { text: 'Monarch butterflies migrate up to 3,000 miles from Canada to Mexico every year.', q: 'How far do monarch butterflies migrate?', a: 'Up to 3,000 miles', wrong: ['About 1,000 miles', 'About 5,000 miles', 'About 500 miles'], category: 'behavior' },
     { text: 'Monarchs are poisonous to birds because they eat milkweed as caterpillars.', q: 'Why are monarch butterflies poisonous?', a: 'They eat milkweed as caterpillars', wrong: ['They are born with venom', 'They absorb poison from the air', 'They are not poisonous'], category: 'ability' },
   ],
   'Firefly': [
@@ -200,11 +200,11 @@ export const SPECIES_FACTS = {
 
   // ── Crustaceans ──────────────────────────────────────────────────
   'Horseshoe crab': [
-    { text: 'Horseshoe crabs have been around for over 450 million years, older than dinosaurs.', q: 'How old is the horseshoe crab species?', a: 'Over 450 million years (older than dinosaurs)', wrong: ['About 1,000 years', 'About 1 million years', 'About 65 million years'], category: 'lifespan' },
+    { text: 'Horseshoe crabs have been around for over 450 million years, older than dinosaurs.', q: 'How old is the horseshoe crab species?', a: 'Over 450 million years (older than dinosaurs)', wrong: ['About 200 million years', 'About 65 million years', 'About 300 million years'], category: 'lifespan' },
     { text: 'Horseshoe crab blood is blue and is used in medicine to test for dangerous bacteria.', q: 'What color is horseshoe crab blood?', a: 'Blue', wrong: ['Red', 'Green', 'Clear'], category: 'body' },
   ],
   'Japanese spider crab': [
-    { text: 'The Japanese spider crab has the longest leg span of any crab, up to 12 feet across.', q: 'How wide can a Japanese spider crab\'s legs stretch?', a: 'Up to 12 feet', wrong: ['About 1 foot', 'About 3 feet', 'About 6 inches'], category: 'size' },
+    { text: 'The Japanese spider crab has the longest leg span of any crab, up to 12 feet across.', q: 'How wide can a Japanese spider crab\'s legs stretch?', a: 'Up to 12 feet', wrong: ['About 8 feet', 'About 6 feet', 'About 15 feet'], category: 'size' },
   ],
   'Coconut crab': [
     { text: 'The coconut crab is the largest land-living arthropod and can crack open coconuts with its claws.', q: 'What can a coconut crab crack open with its claws?', a: 'Coconuts', wrong: ['Rocks', 'Metal cans', 'Glass bottles'], category: 'ability' },

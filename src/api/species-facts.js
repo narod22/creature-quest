@@ -21,11 +21,11 @@ export const SPECIES_FACTS = {
   ],
   'Blue whale': [
     { text: 'The blue whale is the largest animal that has ever lived on Earth, even bigger than any dinosaur.', q: 'Is the blue whale bigger than any dinosaur that ever lived?', a: 'Yes, it is the biggest animal ever', wrong: ['No, T. rex was bigger', 'No, Brachiosaurus was bigger', 'They were about the same size'], category: 'size' },
-    { text: 'A blue whale\'s heart is about the size of a small car.', q: 'How big is a blue whale\'s heart?', a: 'About the size of a small car', wrong: ['About the size of a basketball', 'About the size of a watermelon', 'About the size of a football'], category: 'body' },
+    { text: 'A blue whale\'s heart is about the size of a golf cart and weighs around 400 pounds.', q: 'How big is a blue whale\'s heart?', a: 'About the size of a golf cart', wrong: ['About the size of a basketball', 'About the size of a school bus', 'About the size of a football'], category: 'body' },
     { text: 'Blue whales can be heard from over 1,000 miles away.', q: 'How far away can a blue whale be heard?', a: 'Over 1,000 miles', wrong: ['About 500 miles', 'About 100 miles', 'About 2,000 miles'], category: 'ability' },
   ],
   'Red fox': [
-    { text: 'Red foxes can hear a mouse digging underground from over 100 feet away.', q: 'What amazing thing can a red fox hear?', a: 'A mouse digging underground', wrong: ['A bird flying overhead', 'A fish swimming', 'Thunder from 50 miles away'], category: 'ability' },
+    { text: 'Red foxes can hear a mouse squeaking or moving through snow from up to 100 feet away.', q: 'What amazing thing can a red fox hear?', a: 'A mouse moving under the snow', wrong: ['A bird flying overhead', 'A fish swimming', 'Thunder from 50 miles away'], category: 'ability' },
     { text: 'Red foxes are found on every continent except Antarctica.', q: 'Which continent do red foxes NOT live on?', a: 'Antarctica', wrong: ['Africa', 'Asia', 'South America'], category: 'habitat' },
     { text: 'A fox\'s tail is called a "brush" and helps them balance.', q: 'What is a fox\'s tail called?', a: 'A brush', wrong: ['A flag', 'A rudder', 'A whip'], category: 'body' },
   ],
@@ -42,7 +42,7 @@ export const SPECIES_FACTS = {
   'Cheetah': [
     { text: 'The cheetah is the fastest land animal, reaching speeds of 70 miles per hour.', q: 'How fast can a cheetah run?', a: 'Up to 70 mph', wrong: ['Up to 50 mph', 'Up to 60 mph', 'Up to 80 mph'], category: 'speed' },
     { text: 'A cheetah can go from 0 to 60 mph in just 3 seconds, faster than most sports cars.', q: 'How fast can a cheetah accelerate to 60 mph?', a: '3 seconds', wrong: ['5 seconds', '7 seconds', '1 second'], category: 'speed' },
-    { text: 'Cheetahs are the only big cats that cannot roar. They chirp and purr instead.', q: 'What sound does a cheetah make instead of roaring?', a: 'Chirps and purrs', wrong: ['Barks', 'Hisses', 'Screams'], category: 'ability' },
+    { text: 'Unlike lions and tigers, cheetahs cannot roar. They chirp, purr, and make a sound called a churr.', q: 'What sound does a cheetah make instead of roaring?', a: 'Chirps and purrs', wrong: ['Barks', 'Hisses', 'Screams'], category: 'ability' },
   ],
   'Giant panda': [
     { text: 'Giant pandas eat bamboo for about 12 hours every single day.', q: 'How many hours a day do pandas spend eating bamboo?', a: 'About 12 hours', wrong: ['About 8 hours', 'About 16 hours', 'About 6 hours'], category: 'diet' },
@@ -52,7 +52,7 @@ export const SPECIES_FACTS = {
   'Giraffe': [
     { text: 'Giraffes are the tallest animals on Earth, reaching up to 18 feet tall.', q: 'How tall can a giraffe get?', a: 'Up to 18 feet', wrong: ['Up to 8 feet', 'Up to 30 feet', 'Up to 12 feet'], category: 'size' },
     { text: 'A giraffe\'s tongue is about 18 inches long and is dark purple to protect it from sunburn.', q: 'What color is a giraffe\'s tongue?', a: 'Dark purple', wrong: ['Pink', 'Red', 'White'], category: 'body' },
-    { text: 'Giraffes only need about 30 minutes of sleep per day.', q: 'How much sleep does a giraffe need per day?', a: 'About 30 minutes', wrong: ['About 8 hours', 'About 4 hours', 'About 12 hours'], category: 'behavior' },
+    { text: 'Wild giraffes sleep less than two hours a day, often in short naps of just a few minutes at a time.', q: 'How much sleep does a wild giraffe get per day?', a: 'Less than two hours', wrong: ['About 8 hours', 'About 4 hours', 'About 12 hours'], category: 'behavior' },
   ],
   'Dolphin': [
     { text: 'Dolphins sleep with one eye open and half their brain awake.', q: 'How do dolphins sleep?', a: 'With one eye open and half their brain awake', wrong: ['Floating on their backs', 'At the bottom of the ocean', 'They never sleep'], category: 'behavior' },
@@ -61,7 +61,7 @@ export const SPECIES_FACTS = {
   ],
   'Polar bear': [
     { text: 'A polar bear\'s fur looks white, but each hair is actually hollow and transparent.', q: 'What is special about polar bear fur?', a: 'Each hair is actually hollow and transparent', wrong: ['It is waterproof metal', 'It changes color in summer', 'It glows in the dark'], category: 'body' },
-    { text: 'Polar bears can smell a seal on the ice from 20 miles away.', q: 'How far away can a polar bear smell a seal?', a: '20 miles', wrong: ['10 miles', '5 miles', '30 miles'], category: 'ability' },
+    { text: 'Polar bears have one of the best senses of smell of any animal and can detect seals from several miles away.', q: 'What is one of the polar bear\'s best senses?', a: 'Smell (can detect seals from miles away)', wrong: ['Hearing (can hear fish underwater)', 'Sight (can see in total darkness)', 'Touch (can feel vibrations in ice)'], category: 'ability' },
     { text: 'Under their white fur, polar bears have black skin to absorb heat from the sun.', q: 'What color is a polar bear\'s skin under its fur?', a: 'Black', wrong: ['White', 'Pink', 'Brown'], category: 'body' },
   ],
   'Koala': [
@@ -69,7 +69,7 @@ export const SPECIES_FACTS = {
     { text: 'Koalas have fingerprints that look almost identical to human fingerprints.', q: 'What do koala fingerprints look like?', a: 'Almost identical to human fingerprints', wrong: ['Completely smooth', 'Like tiny circles', 'Like snowflakes'], category: 'body' },
   ],
   'Platypus': [
-    { text: 'The platypus is one of only two mammals that lay eggs.', q: 'What makes the platypus unusual for a mammal?', a: 'It lays eggs', wrong: ['It can fly', 'It has scales', 'It lives in salt water'], category: 'ability' },
+    { text: 'The platypus is one of only five mammals that lay eggs. The other four are echidna species. Together they are called monotremes.', q: 'What makes the platypus unusual for a mammal?', a: 'It lays eggs', wrong: ['It can fly', 'It has scales', 'It lives in salt water'], category: 'ability' },
     { text: 'Male platypuses have venomous spurs on their back legs.', q: 'What weapon does a male platypus have?', a: 'Venomous spurs on their back legs', wrong: ['Sharp teeth', 'Electric shocks', 'Poisonous claws'], category: 'body' },
     { text: 'The platypus can detect the electric fields of its prey using its bill.', q: 'What can a platypus detect with its bill?', a: 'Electric fields from prey', wrong: ['Colors in the dark', 'Sounds from miles away', 'Temperature changes'], category: 'ability' },
   ],
@@ -89,7 +89,7 @@ export const SPECIES_FACTS = {
   // ── Birds ────────────────────────────────────────────────────────
   'Bald eagle': [
     { text: 'Bald eagles can see fish swimming from over a mile away.', q: 'How far away can a bald eagle spot a fish?', a: 'Over a mile', wrong: ['About half a mile', 'About 2 miles', 'About a quarter mile'], category: 'ability' },
-    { text: 'A bald eagle\'s nest can weigh as much as a car, over 2 tons.', q: 'How heavy can a bald eagle\'s nest get?', a: 'Over 2 tons (as much as a car)', wrong: ['About 500 pounds', 'About 200 pounds', 'About 1 ton'], category: 'size' },
+    { text: 'The largest bald eagle nest ever recorded weighed over 2 tons, as much as a car. Eagles add to the same nest every year.', q: 'How heavy was the largest bald eagle nest ever found?', a: 'Over 2 tons (as much as a car)', wrong: ['About 500 pounds', 'About 200 pounds', 'About 1 ton'], category: 'size' },
   ],
   'Peregrine falcon': [
     { text: 'The peregrine falcon is the fastest animal on Earth, diving at over 240 mph.', q: 'What is the fastest animal on Earth?', a: 'Peregrine falcon', wrong: ['Cheetah', 'Sailfish', 'Golden eagle'], category: 'speed' },
@@ -127,7 +127,7 @@ export const SPECIES_FACTS = {
 
   // ── Fish ──────────────────────────────────────────────────────────
   'Great white shark': [
-    { text: 'Great white sharks can detect a single drop of blood in 25 gallons of water.', q: 'How sensitive is a great white shark\'s sense of smell?', a: 'Can detect one drop of blood in 25 gallons', wrong: ['Can only smell blood up close', 'About the same as humans', 'Cannot smell at all'], category: 'ability' },
+    { text: 'Great white sharks can smell blood at incredibly tiny concentrations, as little as one drop diluted into a swimming pool.', q: 'How sensitive is a great white shark\'s sense of smell?', a: 'Can smell one drop of blood in a swimming pool', wrong: ['Can only smell blood up close', 'About the same as humans', 'Cannot smell at all'], category: 'ability' },
     { text: 'Great white sharks have about 300 teeth arranged in rows.', q: 'How many teeth does a great white shark have?', a: 'About 300', wrong: ['About 200', 'About 500', 'About 150'], category: 'body' },
   ],
   'Seahorse': [
@@ -141,7 +141,7 @@ export const SPECIES_FACTS = {
 
   // ── Ocean Creatures ──────────────────────────────────────────────
   'Giant squid': [
-    { text: 'Giant squid have the largest eyes of any animal, about the size of a dinner plate.', q: 'How big are giant squid eyes?', a: 'About the size of a dinner plate', wrong: ['About the size of a marble', 'About the size of a golf ball', 'About the size of a basketball'], category: 'body' },
+    { text: 'Giant squid have some of the largest eyes of any animal, about the size of a dinner plate. Only the colossal squid\'s eyes may be bigger.', q: 'How big are giant squid eyes?', a: 'About the size of a dinner plate', wrong: ['About the size of a marble', 'About the size of a golf ball', 'About the size of a basketball'], category: 'body' },
     { text: 'Giant squid live deep in the ocean and were not photographed alive until 2004.', q: 'When was a giant squid first photographed alive?', a: '2004', wrong: ['1950', '1890', '2020'], category: 'behavior' },
     { text: 'Giant squid have three hearts and blue blood.', q: 'How many hearts does a giant squid have?', a: 'Three', wrong: ['One', 'Two', 'Five'], category: 'body' },
   ],
@@ -156,8 +156,8 @@ export const SPECIES_FACTS = {
     { text: 'The immortal jellyfish can reverse its aging and become young again.', q: 'What can the "immortal jellyfish" do?', a: 'Reverse its aging and become young again', wrong: ['Live for exactly 1,000 years', 'Grow to the size of a whale', 'Survive in outer space'], category: 'ability' },
   ],
   'Mantis shrimp': [
-    { text: 'The mantis shrimp can punch with the force of a bullet, fast enough to boil the water around its fist.', q: 'How powerful is a mantis shrimp\'s punch?', a: 'As strong as a bullet', wrong: ['About as strong as a human finger tap', 'Barely noticeable', 'Strong enough to crack a peanut'], category: 'ability' },
-    { text: 'Mantis shrimp can see 16 types of color, while humans can only see 3.', q: 'How many types of color can a mantis shrimp see?', a: '16 types', wrong: ['3 types (same as humans)', 'No colors at all', '100 types'], category: 'ability' },
+    { text: 'The mantis shrimp strikes as fast as a bullet. The punch is so fast it creates bubbles that briefly boil the water from the pressure drop.', q: 'How fast is a mantis shrimp\'s punch?', a: 'As fast as a bullet', wrong: ['About as fast as a human punch', 'Barely noticeable', 'About as fast as a cat\'s paw swipe'], category: 'ability' },
+    { text: 'Mantis shrimp have 16 types of color receptors (humans have 3), but they use them differently. They can see ultraviolet light and polarized light that humans cannot detect at all.', q: 'What can mantis shrimp see that humans cannot?', a: 'Ultraviolet and polarized light', wrong: ['X-rays', 'Radio waves', 'Sound waves'], category: 'ability' },
   ],
 
   // ── Dinosaurs ────────────────────────────────────────────────────
@@ -194,7 +194,7 @@ export const SPECIES_FACTS = {
     { text: 'Tarantulas can live for over 20 years in captivity.', q: 'How long can a tarantula live?', a: 'Over 20 years', wrong: ['About 6 months', 'About 2 years', 'About 5 years'], category: 'lifespan' },
   ],
   'Jumping spider': [
-    { text: 'Jumping spiders can leap up to 50 times their own body length.', q: 'How far can a jumping spider jump?', a: 'Up to 50 times its body length', wrong: ['About twice its body length', 'About 5 times its body length', 'They cannot jump'], category: 'ability' },
+    { text: 'Some jumping spiders can leap more than 40 times their own body length.', q: 'How far can a jumping spider jump?', a: 'More than 40 times its body length', wrong: ['About twice its body length', 'About 5 times its body length', 'They cannot jump'], category: 'ability' },
     { text: 'Jumping spiders have the best vision of any spider and can see in color.', q: 'What is special about jumping spider eyes?', a: 'Best vision of any spider and can see color', wrong: ['They are completely blind', 'They can only see red', 'They have heat vision'], category: 'ability' },
   ],
 

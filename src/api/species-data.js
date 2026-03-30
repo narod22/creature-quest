@@ -2269,4 +2269,480 @@ export const SPECIES_DATA = {
       { text: 'Margays spend almost their entire lives in trees and can even sleep hanging from a branch by one foot.', q: 'Where do margays spend most of their lives?', a: 'In trees', wrong: ['In underground dens', 'Near water sources', 'On open grasslands'], category: 'habitat' },
     ],
   },
+
+  // ══════════════════════════════════════════════════════════════════
+  // REPTILES, FISH & INVERTEBRATES (WAVE 3)
+  // ══════════════════════════════════════════════════════════════════
+  'Blue Iguana': {
+    status: 'EN',
+    habitat: 'Dry rocky forests and coastal shrublands',
+    range: 'Grand Cayman Island, Caribbean',
+    facts: [
+      { text: 'Blue iguanas can live over 60 years, making them one of the longest-lived lizards on Earth.', q: 'How long can blue iguanas live?', a: 'Over 60 years', wrong: ['About 20 years', 'Up to 35 years', 'Around 10 years'], category: 'lifespan' },
+      { text: 'They turn a brighter blue when they are happy or showing off for other iguanas.', q: 'When do blue iguanas turn a brighter shade of blue?', a: 'When happy or displaying', wrong: ['When cold', 'When sleeping', 'When scared'], category: 'body' },
+      { text: 'By 2002, fewer than 15 blue iguanas were left in the wild. Breeding programs brought them back to over 1,000.', q: 'How few blue iguanas were left in the wild by 2002?', a: 'Fewer than 15', wrong: ['About 200', 'Around 500', 'Fewer than 100'], category: 'behavior' },
+      { text: 'Blue iguanas can grow up to 5 feet long including their tail.', q: 'How long can a blue iguana grow?', a: 'Up to 5 feet', wrong: ['Up to 2 feet', 'Up to 8 feet', 'Up to 3 feet'], category: 'size' },
+    ],
+  },
+  'Pygmy Chameleon': {
+    status: 'LC',
+    habitat: 'Leaf litter on forest floors',
+    range: 'East Africa, Tanzania and neighboring countries',
+    facts: [
+      { text: 'Some pygmy chameleons are so small they can stand on the head of a match.', q: 'How small are some pygmy chameleons?', a: 'They can stand on a matchhead', wrong: ['About the size of a tennis ball', 'As big as a golf ball', 'The size of a mouse'], category: 'size' },
+      { text: 'Instead of changing bright colors like bigger chameleons, pygmy chameleons mostly just mimic dead leaves.', q: 'What do pygmy chameleons mimic with their color?', a: 'Dead leaves', wrong: ['Bright flowers', 'Tree bark', 'Green moss'], category: 'ability' },
+      { text: 'They sleep on low twigs at night, and researchers find them by searching with flashlights because their pale sleeping color stands out.', q: 'How do researchers find pygmy chameleons at night?', a: 'Flashlights reveal their pale sleeping color', wrong: ['They glow in the dark', 'They make chirping sounds', 'They reflect infrared light'], category: 'behavior' },
+    ],
+  },
+  'Caiman Lizard': {
+    status: 'LC',
+    habitat: 'Flooded forests and swampy wetlands',
+    range: 'South America, Amazon Basin',
+    facts: [
+      { text: 'Caiman lizards have flattened teeth in the back of their mouths designed to crush snail shells like a nutcracker.', q: 'What are caiman lizard back teeth designed to crush?', a: 'Snail shells', wrong: ['Fish bones', 'Nuts and seeds', 'Crab claws'], category: 'diet' },
+      { text: 'They have a clear third eyelid that acts like built-in swimming goggles underwater.', q: 'What does the caiman lizard\'s third eyelid do?', a: 'Acts like swimming goggles underwater', wrong: ['Helps them see in the dark', 'Protects from sand', 'Lets them sleep with eyes open'], category: 'body' },
+      { text: 'After crushing a snail, they spit out the broken shell pieces and only swallow the soft body inside.', q: 'What do caiman lizards do after crushing a snail shell?', a: 'Spit out the shell and eat only the body', wrong: ['Swallow everything whole', 'Save the shells in a pile', 'Eat the shell for calcium'], category: 'diet' },
+      { text: 'They can grow over 4 feet long and weigh up to 10 pounds, making them one of the biggest lizards in the Americas.', q: 'How long can a caiman lizard grow?', a: 'Over 4 feet', wrong: ['About 1 foot', 'Up to 7 feet', 'Around 2 feet'], category: 'size' },
+    ],
+  },
+  'Flying Dragon Lizard': {
+    status: 'LC',
+    habitat: 'Tropical rainforest canopy',
+    range: 'Southeast Asia',
+    facts: [
+      { text: 'Flying dragon lizards have wing-like flaps of skin stretched over extended ribs that let them glide up to 26 feet between trees.', q: 'How far can a flying dragon lizard glide?', a: 'Up to 26 feet', wrong: ['Up to 5 feet', 'Up to 100 feet', 'Up to 50 feet'], category: 'ability' },
+      { text: 'They almost never come down to the ground. Even to lay eggs, females only visit the forest floor briefly.', q: 'How often do flying dragon lizards come to the ground?', a: 'Almost never', wrong: ['Every day to hunt', 'Every night to sleep', 'Weekly to drink water'], category: 'habitat' },
+      { text: 'Males flash their brightly colored wing flaps to warn rival males to stay away from their territory.', q: 'Why do male flying dragons flash their wing flaps?', a: 'To warn rival males away', wrong: ['To attract insects', 'To cool down', 'To scare predators'], category: 'behavior' },
+      { text: 'They are tiny, only about 8 inches long including the tail, and weigh less than a slice of bread.', q: 'About how long is a flying dragon lizard?', a: 'About 8 inches', wrong: ['About 2 feet', 'About 4 inches', 'About 18 inches'], category: 'size' },
+    ],
+  },
+  'Tomato Frog': {
+    status: 'LC',
+    habitat: 'Swamps, shallow pools, and urban gardens',
+    range: 'Madagascar',
+    facts: [
+      { text: 'When threatened, tomato frogs puff up their body and ooze a thick white glue from their skin that can gum up a snake\'s mouth.', q: 'What do tomato frogs ooze when threatened?', a: 'A thick white glue-like substance', wrong: ['Poison ink', 'Hot acid', 'Slippery oil'], category: 'ability' },
+      { text: 'Only females are bright tomato-red. Males are a duller brownish-orange.', q: 'Which tomato frogs are bright red?', a: 'Only the females', wrong: ['Only the males', 'Both males and females', 'Only the babies'], category: 'body' },
+      { text: 'They are ambush predators that sit and wait with their mouth open for insects to wander close enough to grab.', q: 'How do tomato frogs hunt?', a: 'Sit and wait for prey to come close', wrong: ['Chase insects through the forest', 'Dig underground to find worms', 'Swim after aquatic prey'], category: 'behavior' },
+    ],
+  },
+  'Brookesia Micra': {
+    status: 'EN',
+    habitat: 'Leaf litter in dry deciduous forest on a tiny island',
+    range: 'Nosy Hara islet, Madagascar',
+    facts: [
+      { text: 'Brookesia micra is one of the smallest reptiles ever discovered. Adults are small enough to stand on the tip of a matchstick.', q: 'How small is an adult Brookesia micra?', a: 'It can stand on a matchstick tip', wrong: ['About the size of a golf ball', 'About as long as a pencil', 'The size of a grape'], category: 'size' },
+      { text: 'Their entire known habitat is a single tiny island off Madagascar that is only about half a square mile.', q: 'How large is Brookesia micra\'s entire known habitat?', a: 'About half a square mile on one island', wrong: ['The whole island of Madagascar', 'A 50 square mile forest', 'Several islands in the Indian Ocean'], category: 'habitat' },
+      { text: 'At night they climb a few inches up onto small twigs to sleep, which is considered "high up" for an animal this small.', q: 'Where does Brookesia micra sleep at night?', a: 'A few inches up on small twigs', wrong: ['Underground in burrows', 'On the tops of trees', 'Floating on water'], category: 'behavior' },
+    ],
+  },
+  'Emerald Tree Boa': {
+    status: 'LC',
+    habitat: 'Tropical rainforest canopy near rivers',
+    range: 'South America, Amazon Basin',
+    facts: [
+      { text: 'Emerald tree boas have heat-sensing pits along their lips that let them detect warm-blooded prey in total darkness.', q: 'How do emerald tree boas find prey in the dark?', a: 'Heat-sensing pits along their lips', wrong: ['Echolocation like bats', 'Extremely good eyesight', 'Vibration sensors in their tail'], category: 'ability' },
+      { text: 'Baby emerald tree boas are born bright red or orange and slowly turn green as they grow up.', q: 'What color are baby emerald tree boas?', a: 'Bright red or orange', wrong: ['Dark green', 'Black with white stripes', 'Yellow'], category: 'body' },
+      { text: 'They have the largest front teeth of any non-venomous snake relative to their body size.', q: 'What is unusual about emerald tree boa teeth?', a: 'Largest front teeth of any non-venomous snake for their size', wrong: ['They have no teeth at all', 'Their teeth are venomous', 'They regrow teeth every week'], category: 'body' },
+      { text: 'They coil around branches in a distinctive "saddle" position and can strike prey while hanging upside down.', q: 'How do emerald tree boas rest on branches?', a: 'Coiled in a saddle position', wrong: ['Stretched straight along the branch', 'Wrapped tightly in a ball', 'Hanging by their tail'], category: 'behavior' },
+    ],
+  },
+  'Shovel-Snouted Lizard': {
+    status: 'LC',
+    habitat: 'Sand dunes in coastal desert',
+    range: 'Namib Desert, southwestern Africa',
+    facts: [
+      { text: 'To avoid burning their feet on scorching sand, these lizards do a "thermal dance," lifting two legs at a time in alternation.', q: 'Why do shovel-snouted lizards lift their feet in a dance?', a: 'The sand is too hot to stand on', wrong: ['To attract a mate', 'To scare off predators', 'To shake off parasites'], category: 'behavior' },
+      { text: 'They dive headfirst into sand dunes and "swim" through loose sand to escape predators and the heat.', q: 'How do shovel-snouted lizards escape predators?', a: 'They dive into and swim through sand', wrong: ['They fly short distances', 'They spray venom', 'They camouflage instantly'], category: 'ability' },
+      { text: 'Their specially shaped snout works like a shovel to help them burrow into sand in less than a second.', q: 'What helps this lizard burrow so fast?', a: 'A shovel-shaped snout', wrong: ['Extra-long claws', 'A drill-like tail', 'Vibrating body scales'], category: 'body' },
+    ],
+  },
+  'Boomslang': {
+    status: 'LC',
+    habitat: 'Savannas, shrublands, and lowland forests',
+    range: 'Sub-Saharan Africa',
+    facts: [
+      { text: 'The boomslang has enormous eyes that take up almost its entire head, giving it incredible eyesight for a snake.', q: 'What is unusual about the boomslang\'s eyes?', a: 'They are enormous relative to its head', wrong: ['They can see infrared light', 'They have three eyelids', 'They glow at night'], category: 'body' },
+      { text: 'Its venom prevents blood from clotting, but it is so shy and reluctant to bite that human envenomations are extremely rare.', q: 'What does boomslang venom do?', a: 'Prevents blood from clotting', wrong: ['Paralyzes muscles', 'Dissolves tissue', 'Causes hallucinations'], category: 'ability' },
+      { text: 'Boomslangs can inflate their necks to twice the normal size to look bigger and scarier when threatened.', q: 'How do boomslangs try to scare threats away?', a: 'Inflate their neck to twice its size', wrong: ['Rattle their tail', 'Spit venom at enemies', 'Play dead on the ground'], category: 'behavior' },
+      { text: 'The name "boomslang" means "tree snake" in Afrikaans, and they spend most of their lives in trees.', q: 'What does "boomslang" mean?', a: 'Tree snake in Afrikaans', wrong: ['Boom snake in Dutch', 'Big fang in Zulu', 'Fast strike in Swahili'], category: 'habitat' },
+    ],
+  },
+  'Chinese Crocodile Lizard': {
+    status: 'EN',
+    habitat: 'Cool mountain streams in subtropical forests',
+    range: 'Southern China and northern Vietnam',
+    facts: [
+      { text: 'Chinese crocodile lizards can sit so still on branches above water that they appear to be in a trance. Scientists call this "sleep hunting."', q: 'What is the Chinese crocodile lizard\'s unusual hunting style called?', a: 'Sleep hunting', wrong: ['Speed striking', 'Stone sitting', 'Dream catching'], category: 'behavior' },
+      { text: 'Unlike most lizards, they give birth to live babies instead of laying eggs.', q: 'How do Chinese crocodile lizards have babies?', a: 'They give birth to live young', wrong: ['They lay eggs in sand', 'They lay eggs in water', 'They lay eggs in tree hollows'], category: 'behavior' },
+      { text: 'Their tail has bony ridged scales that look just like a crocodile\'s tail, which is how they got their name.', q: 'Why are they called crocodile lizards?', a: 'Their tail has bony ridged scales like a crocodile', wrong: ['They hunt like crocodiles', 'They live with crocodiles', 'They are closely related to crocodiles'], category: 'body' },
+    ],
+  },
+  'Namib Sand Gecko': {
+    status: 'LC',
+    habitat: 'Wind-blown sand dunes in extreme desert',
+    range: 'Namib Desert, Namibia',
+    facts: [
+      { text: 'Namib sand geckos lick their own eyeballs to drink the fog moisture that condenses on them during cool desert nights.', q: 'How do Namib sand geckos drink water?', a: 'They lick fog moisture off their own eyeballs', wrong: ['They dig wells in the sand', 'They absorb water through their skin', 'They drink from cacti'], category: 'ability' },
+      { text: 'Their webbed feet act like snowshoes, spreading their weight so they can run across loose sand without sinking.', q: 'Why do Namib sand geckos have webbed feet?', a: 'To run on loose sand without sinking', wrong: ['To swim in flash floods', 'To dig burrows faster', 'To climb smooth rocks'], category: 'body' },
+      { text: 'Their skin is nearly translucent. You can sometimes see their internal organs through their belly.', q: 'What is unusual about the Namib sand gecko\'s skin?', a: 'It is nearly translucent', wrong: ['It is covered in tiny spines', 'It changes color like a chameleon', 'It is waterproof and waxy'], category: 'body' },
+    ],
+  },
+  'Olm': {
+    status: 'VU',
+    habitat: 'Underground cave rivers and lakes in total darkness',
+    range: 'Caves of the Dinaric Alps, Slovenia and Croatia',
+    facts: [
+      { text: 'Olms are completely blind and have spent so long in dark caves that their eyes are covered by skin.', q: 'Why are olms blind?', a: 'Their eyes are covered over by skin from living in dark caves', wrong: ['They scratch their eyes on rocks', 'Cave fish ate their eyes', 'They are born without eye sockets'], category: 'body' },
+      { text: 'Olms can survive without eating for up to 10 years by slowing their metabolism to almost nothing.', q: 'How long can an olm survive without food?', a: 'Up to 10 years', wrong: ['About 2 weeks', 'Up to 6 months', 'About 3 years'], category: 'ability' },
+      { text: 'They can live over 100 years, making them one of the longest-lived amphibians on Earth.', q: 'How long can olms live?', a: 'Over 100 years', wrong: ['About 20 years', 'Up to 40 years', 'Around 60 years'], category: 'lifespan' },
+      { text: 'Medieval Europeans who found olms washed out of caves thought they were baby dragons.', q: 'What did medieval Europeans think olms were?', a: 'Baby dragons', wrong: ['Cursed fish', 'Water fairies', 'Ghost eels'], category: 'behavior' },
+    ],
+  },
+  'Mimic Poison Frog': {
+    status: 'LC',
+    habitat: 'Tropical rainforest floor and low vegetation',
+    range: 'Northern Peru',
+    facts: [
+      { text: 'The mimic poison frog copies the color patterns of other more toxic poison frogs in its area to fool predators into thinking it is more dangerous.', q: 'Why does the mimic poison frog copy other frogs\' colors?', a: 'To fool predators into thinking it is more dangerous', wrong: ['To attract more mates', 'To camouflage with flowers', 'To communicate with other species'], category: 'ability' },
+      { text: 'Males carry their tadpoles on their backs to small pools of water in plants high up in the trees.', q: 'How do mimic poison frog males transport tadpoles?', a: 'Carry them on their backs to water pools in plants', wrong: ['In their mouths like fish', 'In a pouch like kangaroos', 'They roll them down streams'], category: 'behavior' },
+      { text: 'Different populations of this single species look completely different depending on which toxic frog they are copying.', q: 'Why do different populations of mimic poison frogs look different?', a: 'They copy different toxic frog species in their area', wrong: ['The soil minerals color their skin', 'Their diet changes their color', 'Males and females are different colors'], category: 'body' },
+    ],
+  },
+  'Spiny Bush Viper': {
+    status: 'LC',
+    habitat: 'Tropical rainforest, often in trees and shrubs near water',
+    range: 'Central Africa, Congo Basin region',
+    facts: [
+      { text: 'Spiny bush vipers have rough, keeled scales that stick up like tiny spines, giving them a dragon-like appearance.', q: 'What makes the spiny bush viper look like a dragon?', a: 'Rough keeled scales that stick up like spines', wrong: ['Wings on its ribs', 'A forked horn on its head', 'Bony plates on its back'], category: 'body' },
+      { text: 'They hunt at night using a sit-and-wait strategy, hanging from branches and striking at frogs and lizards that pass below.', q: 'How do spiny bush vipers hunt?', a: 'Hang from branches and strike prey passing below', wrong: ['Chase prey across the ground', 'Dig up burrowing insects', 'Lure prey with their tail'], category: 'behavior' },
+      { text: 'Their prehensile tail grips branches like a fifth hand, letting them hang in positions no other viper can manage.', q: 'What does the spiny bush viper use its prehensile tail for?', a: 'Gripping branches like a hand', wrong: ['Making rattling sounds', 'Luring prey closer', 'Digging nests in the ground'], category: 'ability' },
+    ],
+  },
+  'Vietnamese Mossy Frog': {
+    status: 'LC',
+    habitat: 'Rocky limestone caves and mountain streams',
+    range: 'Northern Vietnam and southern China',
+    facts: [
+      { text: 'Their bumpy green and brown skin looks exactly like a clump of moss. When they curl up, even scientists have trouble spotting them.', q: 'What does the Vietnamese mossy frog\'s skin look like?', a: 'A clump of moss', wrong: ['Tree bark', 'A pile of mud', 'A wet rock'], category: 'body' },
+      { text: 'When scared, they curl into a ball and play dead, looking even more like a mossy rock.', q: 'What does the Vietnamese mossy frog do when scared?', a: 'Curls into a ball and plays dead', wrong: ['Jumps into water', 'Puffs up and hisses', 'Sprays a foul-smelling liquid'], category: 'behavior' },
+      { text: 'They can throw their voice like a ventriloquist, making their calls seem to come from a different direction.', q: 'What unusual vocal trick can mossy frogs do?', a: 'Throw their voice like a ventriloquist', wrong: ['Sing in two tones at once', 'Mimic bird calls', 'Make ultrasonic sounds only bats can hear'], category: 'ability' },
+    ],
+  },
+  'Panther Grouper': {
+    status: 'LC',
+    habitat: 'Coral reefs and lagoons',
+    range: 'Indo-Pacific Ocean, from East Africa to Fiji',
+    facts: [
+      { text: 'Panther groupers can change sex. They start life as female and can become male as they grow larger.', q: 'What is unusual about panther grouper sex?', a: 'They start female and can change to male', wrong: ['Males become female when stressed', 'They are all born male', 'They have no fixed sex'], category: 'body' },
+      { text: 'They can swallow prey nearly as large as themselves because their mouths and stomachs can stretch to enormous sizes.', q: 'How large of prey can a panther grouper eat?', a: 'Nearly as large as themselves', wrong: ['Only tiny shrimp', 'About one-quarter their size', 'About half their size'], category: 'diet' },
+      { text: 'Baby panther groupers mimic toxic flatworms by swimming with a wobbling motion and displaying similar spotted patterns to avoid predators.', q: 'What do baby panther groupers mimic to avoid predators?', a: 'Toxic flatworms', wrong: ['Sea snakes', 'Lionfish', 'Jellyfish'], category: 'ability' },
+    ],
+  },
+  'Goblin Shark': {
+    status: 'LC',
+    habitat: 'Deep ocean, along continental shelves and submarine canyons',
+    range: 'Worldwide in deep waters, most found near Japan',
+    facts: [
+      { text: 'The goblin shark can shoot its entire jaw forward out of its mouth to grab prey, like a spring-loaded trap.', q: 'What can the goblin shark do with its jaw?', a: 'Shoot it forward out of its mouth to grab prey', wrong: ['Crush shells like a nutcracker', 'Unhinge it like a snake', 'Lock it shut with extreme force'], category: 'ability' },
+      { text: 'They live so deep in the ocean, usually below 800 feet, that fewer than 50 have ever been seen alive.', q: 'How deep do goblin sharks usually live?', a: 'Below 800 feet', wrong: ['About 50 feet deep', 'Just below the surface', 'About 200 feet deep'], category: 'habitat' },
+      { text: 'Their long flat snout is covered in electroreceptors that detect the faint electrical signals of nearby prey in total darkness.', q: 'What does the goblin shark use its long snout for?', a: 'Detecting electrical signals from prey', wrong: ['Digging in the seafloor', 'Poking into crevices for food', 'Balancing while swimming'], category: 'body' },
+      { text: 'Goblin sharks are sometimes called "living fossils" because their family has existed for about 125 million years.', q: 'How old is the goblin shark lineage?', a: 'About 125 million years', wrong: ['About 10 million years', 'About 500 million years', 'About 50 million years'], category: 'lifespan' },
+    ],
+  },
+  'Weedy Seadragon': {
+    status: 'LC',
+    habitat: 'Kelp forests and seagrass beds in temperate waters',
+    range: 'Southern coast of Australia',
+    facts: [
+      { text: 'Weedy seadragons have leaf-like appendages all over their body that help them blend in with seaweed so perfectly that predators swim right past them.', q: 'Why do weedy seadragons have leaf-like appendages?', a: 'To camouflage with seaweed', wrong: ['To swim faster', 'To absorb sunlight', 'To attract prey'], category: 'body' },
+      { text: 'Like seahorses, the males carry the eggs. The female deposits up to 250 eggs onto a spongy patch under the male\'s tail.', q: 'Who carries the eggs in weedy seadragons?', a: 'The male', wrong: ['The female', 'Both parents', 'Neither, eggs float freely'], category: 'behavior' },
+      { text: 'They have no teeth and no stomach. They suck up tiny shrimp and plankton through their tube-shaped snout like a living straw.', q: 'How do weedy seadragons eat?', a: 'Suck up prey through their snout like a straw', wrong: ['Filter water through their gills', 'Chew with bony plates', 'Trap food in their appendages'], category: 'diet' },
+    ],
+  },
+  'Tasselled Wobbegong': {
+    status: 'LC',
+    habitat: 'Coral reefs, rocky reefs, and sandy bottoms',
+    range: 'Northern Australia, Papua New Guinea, and Indonesia',
+    facts: [
+      { text: 'Tasselled wobbegongs have a fringe of fleshy tassels around their head that look like seaweed, making them almost invisible on the ocean floor.', q: 'What are the fleshy tassels around a wobbegong\'s head for?', a: 'Camouflage that looks like seaweed', wrong: ['Sensing vibrations in water', 'Filtering food from water', 'Attracting small fish'], category: 'body' },
+      { text: 'They are ambush predators that lie perfectly still for hours, then snap up fish that swim over their mouth in a fraction of a second.', q: 'How fast does a wobbegong strike at prey?', a: 'A fraction of a second', wrong: ['About 5 seconds', 'They chase prey slowly', 'About 2 seconds'], category: 'speed' },
+      { text: 'Wobbegongs have been documented trying to swallow sharks that are nearly as long as themselves.', q: 'What surprising prey have wobbegongs tried to eat?', a: 'Sharks nearly their own size', wrong: ['Dolphins', 'Sea turtles', 'Stingrays only'], category: 'diet' },
+      { text: 'Their name "wobbegong" comes from an Australian Aboriginal word thought to mean "shaggy beard."', q: 'What does "wobbegong" likely mean?', a: 'Shaggy beard', wrong: ['Flat fish', 'Rock monster', 'Hidden teeth'], category: 'body' },
+    ],
+  },
+  'Ocean Sunfish': {
+    status: 'VU',
+    habitat: 'Open ocean, tropical and temperate waters worldwide',
+    range: 'All tropical and temperate oceans worldwide',
+    facts: [
+      { text: 'Ocean sunfish are the heaviest bony fish in the world, weighing up to 5,000 pounds, about as much as a pickup truck.', q: 'How heavy can ocean sunfish get?', a: 'Up to 5,000 pounds', wrong: ['Up to 500 pounds', 'Up to 1,000 pounds', 'Up to 10,000 pounds'], category: 'size' },
+      { text: 'A single female can produce 300 million eggs at once, more than any other known vertebrate.', q: 'How many eggs can a female ocean sunfish produce at once?', a: '300 million', wrong: ['About 10,000', 'About 1 million', 'About 50 million'], category: 'behavior' },
+      { text: 'They love to float sideways at the surface and let seabirds pick parasites off their skin, essentially getting a spa treatment.', q: 'Why do ocean sunfish float sideways at the surface?', a: 'To let seabirds pick off their parasites', wrong: ['To warm up in the sun', 'Because they are dying', 'To breathe air'], category: 'behavior' },
+      { text: 'Baby sunfish are tiny and covered in spines. They grow to 60 million times their birth size, the biggest growth of any vertebrate.', q: 'How much do sunfish grow from birth to adult?', a: '60 million times their birth size', wrong: ['About 100 times', 'About 10,000 times', 'About 1 million times'], category: 'size' },
+    ],
+  },
+  'Greenland Shark': {
+    status: 'VU',
+    habitat: 'Deep, cold Arctic and North Atlantic waters',
+    range: 'Arctic Ocean and North Atlantic',
+    facts: [
+      { text: 'Greenland sharks can live over 400 years, making them the longest-lived vertebrate ever discovered.', q: 'How long can Greenland sharks live?', a: 'Over 400 years', wrong: ['About 80 years', 'Up to 150 years', 'About 200 years'], category: 'lifespan' },
+      { text: 'They swim at about 0.76 miles per hour, which is slower than most people walk. They are one of the slowest sharks alive.', q: 'How fast do Greenland sharks typically swim?', a: 'About 0.76 miles per hour', wrong: ['About 5 miles per hour', 'About 15 miles per hour', 'About 25 miles per hour'], category: 'speed' },
+      { text: 'Most Greenland sharks are blind because a parasite attaches to their eyeballs and eats away at them.', q: 'Why are most Greenland sharks blind?', a: 'A parasite eats away at their eyeballs', wrong: ['The deep water pressure damages their eyes', 'They are born without eyes', 'Ice crystals scratch their eyes'], category: 'body' },
+      { text: 'They don\'t reach adulthood until about 150 years old, meaning a shark born when the USA was founded would only now be middle-aged.', q: 'At what age do Greenland sharks reach adulthood?', a: 'About 150 years', wrong: ['About 10 years', 'About 30 years', 'About 50 years'], category: 'lifespan' },
+    ],
+  },
+  'Mandarin Fish': {
+    status: 'LC',
+    habitat: 'Sheltered coastal reefs and lagoons',
+    range: 'Western Pacific Ocean, from Japan to Australia',
+    facts: [
+      { text: 'Mandarin fish are one of only two known fish species that produce their own blue pigment instead of using structural color or light tricks.', q: 'What is special about the mandarin fish\'s blue color?', a: 'They produce their own blue pigment', wrong: ['It comes from their diet', 'Tiny crystals in their skin reflect blue light', 'Bacteria on their skin glow blue'], category: 'body' },
+      { text: 'Instead of scales, they are covered in a thick layer of smelly, bitter mucus that makes predators spit them out immediately.', q: 'What protects mandarin fish from predators?', a: 'Smelly bitter mucus instead of scales', wrong: ['Venomous dorsal spines', 'An electric shock', 'Sharp bony plates'], category: 'ability' },
+      { text: 'They only mate at dusk, and pairs rise together in a brief spiraling dance before releasing eggs and sperm into the water.', q: 'When do mandarin fish mate?', a: 'Only at dusk', wrong: ['Only at dawn', 'Only during full moons', 'Only in winter'], category: 'behavior' },
+    ],
+  },
+  'Red-Bellied Piranha': {
+    status: 'LC',
+    habitat: 'Rivers, lakes, floodplains, and flooded forests',
+    range: 'South America, Amazon and Orinoco river basins',
+    facts: [
+      { text: 'A group of piranhas can strip a large fish to the bone in under a minute, but attacks on humans are extremely rare and almost never fatal.', q: 'How fast can piranhas strip a fish?', a: 'Under a minute', wrong: ['About 10 minutes', 'About an hour', 'Under 10 seconds'], category: 'diet' },
+      { text: 'Piranhas bark. They make a drumming bark sound using their swim bladder to warn other piranhas to back off.', q: 'What sound do piranhas make?', a: 'A barking or drumming sound', wrong: ['A clicking sound like dolphins', 'A hissing sound', 'A whistling sound'], category: 'ability' },
+      { text: 'They are actually quite timid. In an aquarium, piranhas are easily scared and tend to hide in corners when startled.', q: 'How do piranhas behave when startled?', a: 'They hide in corners and act timid', wrong: ['They attack anything nearby', 'They jump out of the water', 'They form a tight defensive ball'], category: 'behavior' },
+      { text: 'Their teeth interlock like a bear trap and are so sharp that indigenous people in the Amazon use them as cutting tools.', q: 'What do some indigenous people use piranha teeth for?', a: 'Cutting tools', wrong: ['Jewelry only', 'Fish hooks', 'Musical instruments'], category: 'body' },
+    ],
+  },
+  'Oarfish': {
+    status: 'LC',
+    habitat: 'Open ocean, deep water between 600 and 3,000 feet',
+    range: 'All tropical and temperate oceans worldwide',
+    facts: [
+      { text: 'Oarfish are the longest bony fish in the world, reaching lengths of up to 36 feet, longer than a school bus.', q: 'How long can oarfish grow?', a: 'Up to 36 feet', wrong: ['Up to 10 feet', 'Up to 20 feet', 'Up to 50 feet'], category: 'size' },
+      { text: 'They swim vertically, head up and tail down, which is extremely unusual for a fish.', q: 'What is unusual about how oarfish swim?', a: 'They swim vertically with head up', wrong: ['They swim backwards', 'They spin in circles', 'They swim upside down'], category: 'behavior' },
+      { text: 'Scientists believe oarfish sightings inspired many ancient legends of giant sea serpents.', q: 'What legends may oarfish have inspired?', a: 'Giant sea serpent legends', wrong: ['Mermaid legends', 'Kraken legends', 'Loch Ness Monster legends'], category: 'behavior' },
+      { text: 'If grabbed by a predator, an oarfish can shed its tail end on purpose and survive with a shorter body.', q: 'What can an oarfish do if a predator grabs its tail?', a: 'Shed the tail end and survive shorter', wrong: ['Deliver an electric shock', 'Release a cloud of ink', 'Coil around the predator'], category: 'ability' },
+    ],
+  },
+  'Frogfish': {
+    status: 'LC',
+    habitat: 'Coral reefs, rocky reefs, and sandy bottoms',
+    range: 'Tropical and subtropical oceans worldwide',
+    facts: [
+      { text: 'Frogfish have a built-in fishing rod. A modified dorsal spine on their head has a fleshy lure at the tip that they wiggle to attract prey.', q: 'How do frogfish attract prey?', a: 'A fleshy lure on a spine they wiggle like a fishing rod', wrong: ['They release a sweet-smelling chemical', 'They flash bioluminescent lights', 'They vibrate to create sound waves'], category: 'ability' },
+      { text: 'They swallow prey in about 6 milliseconds, one of the fastest strikes in the entire animal kingdom.', q: 'How fast is a frogfish strike?', a: 'About 6 milliseconds', wrong: ['About 1 second', 'About 100 milliseconds', 'About half a second'], category: 'speed' },
+      { text: 'Frogfish walk on the ocean floor using their arm-like pectoral fins instead of swimming.', q: 'How do frogfish move along the ocean floor?', a: 'They walk on their arm-like fins', wrong: ['They roll sideways', 'They hop like frogs', 'They slide on mucus like snails'], category: 'behavior' },
+      { text: 'They can change their color and texture over several weeks to perfectly match the sponge or coral they are sitting on.', q: 'How do frogfish camouflage themselves?', a: 'They change color and texture over weeks to match surroundings', wrong: ['They cover themselves in sand', 'They are always transparent', 'They only hunt at night when it is dark'], category: 'body' },
+    ],
+  },
+  'Electric Ray': {
+    status: 'DD',
+    habitat: 'Sandy and muddy bottoms, from shallows to deep water',
+    range: 'Worldwide in tropical, subtropical, and temperate oceans',
+    facts: [
+      { text: 'Electric rays can produce a shock of up to 220 volts, enough to stun a person and strong enough to knock a grown adult off their feet.', q: 'How much voltage can an electric ray produce?', a: 'Up to 220 volts', wrong: ['About 10 volts', 'About 50 volts', 'Up to 600 volts'], category: 'ability' },
+      { text: 'Ancient Romans used electric rays as a form of medicine, placing them on patients to shock away headaches and gout.', q: 'How did ancient Romans use electric rays?', a: 'As a shock treatment for headaches and gout', wrong: ['As a food delicacy at feasts', 'As guard animals in pools', 'As a natural battery for lights'], category: 'behavior' },
+      { text: 'Their electric organs are made from modified muscle cells called electrocytes, stacked like batteries in a flashlight.', q: 'What are electric ray organs made from?', a: 'Modified muscle cells called electrocytes', wrong: ['Specialized nerve cells', 'Copper-rich blood cells', 'Magnetic bone plates'], category: 'body' },
+    ],
+  },
+  'Coelacanth': {
+    status: 'CR',
+    habitat: 'Deep underwater caves along steep rocky coastlines',
+    range: 'East coast of Africa and Indonesia',
+    facts: [
+      { text: 'Coelacanths were thought to have gone extinct 66 million years ago with the dinosaurs, until a live one was caught by a fisherman in 1938.', q: 'When was a living coelacanth rediscovered?', a: '1938', wrong: ['1998', '1875', '1955'], category: 'lifespan' },
+      { text: 'They have a unique joint in their skull that lets the front half of their head swing upward, allowing them to open their mouth extra wide.', q: 'What is unusual about a coelacanth\'s skull?', a: 'A joint lets the front half swing up for a wider mouth opening', wrong: ['It is made of cartilage like a shark', 'It has built-in sonar', 'The skull is transparent'], category: 'body' },
+      { text: 'Their fins move in an alternating pattern similar to how four-legged animals walk, hinting at the evolution from fish to land animals.', q: 'How do coelacanth fins move?', a: 'In an alternating pattern like walking legs', wrong: ['They all move together', 'They spin like propellers', 'They ripple like a wave'], category: 'ability' },
+      { text: 'Coelacanths can live about 100 years and gestate their young for approximately 5 years, one of the longest pregnancies in the animal kingdom.', q: 'How long is a coelacanth\'s pregnancy?', a: 'About 5 years', wrong: ['About 6 months', 'About 1 year', 'About 2 years'], category: 'lifespan' },
+    ],
+  },
+  'Candiru': {
+    status: 'LC',
+    habitat: 'Freshwater rivers with sandy bottoms',
+    range: 'Amazon River basin, South America',
+    facts: [
+      { text: 'Candiru are tiny parasitic catfish, usually less than an inch long, that feed by attaching to the gills of larger fish and drinking their blood.', q: 'How do candiru feed?', a: 'They attach to fish gills and drink blood', wrong: ['They eat algae off rocks', 'They hunt insects at the surface', 'They eat dead fish on the bottom'], category: 'diet' },
+      { text: 'They find their host fish by sensing the chemical ammonia that fish release from their gills when breathing.', q: 'How do candiru find their host fish?', a: 'By sensing ammonia released from fish gills', wrong: ['By following bubbles', 'By listening for heartbeats', 'By seeing in the dark'], category: 'ability' },
+      { text: 'Despite scary legends, they are nearly transparent and almost invisible in the water, making them fascinating to scientists.', q: 'Why are candiru hard to spot in water?', a: 'They are nearly transparent', wrong: ['They swim too fast to see', 'They burrow in sand', 'They only come out at night'], category: 'body' },
+    ],
+  },
+  'Blobfish': {
+    status: 'DD',
+    habitat: 'Deep ocean floor at extreme pressure',
+    range: 'Deep waters off Australia, Tasmania, and New Zealand',
+    facts: [
+      { text: 'The blobfish\'s famous droopy face only happens when it is brought to the surface. In its deep-sea home, it looks like a normal fish.', q: 'When does a blobfish look blobby?', a: 'Only when brought to the surface', wrong: ['All the time', 'Only when sleeping', 'Only when scared'], category: 'body' },
+      { text: 'They live at depths where the pressure is over 100 times greater than at the surface, which would crush a human.', q: 'How much pressure do blobfish live under?', a: 'Over 100 times surface pressure', wrong: ['About 5 times surface pressure', 'About 20 times surface pressure', 'About 50 times surface pressure'], category: 'habitat' },
+      { text: 'Instead of a gas-filled swim bladder, their entire body is made of a jelly-like substance slightly less dense than water, letting them float effortlessly.', q: 'How does a blobfish float without a swim bladder?', a: 'Their body is jelly-like and slightly less dense than water', wrong: ['They constantly swim to stay afloat', 'They trap air bubbles in their skin', 'They have hollow bones filled with oil'], category: 'body' },
+    ],
+  },
+  'Longhorn Cowfish': {
+    status: 'LC',
+    habitat: 'Coral reefs and sandy lagoons',
+    range: 'Indo-Pacific, from East Africa to Japan and Australia',
+    facts: [
+      { text: 'Longhorn cowfish have two horns on their head and two on their rear that make them look like a tiny underwater cow.', q: 'Why are they called cowfish?', a: 'They have horn-like projections like a cow', wrong: ['They moo when startled', 'They graze on seagrass like cows', 'They are black and white like cows'], category: 'body' },
+      { text: 'When stressed, cowfish release a deadly toxin from their skin called ostracitoxin that can kill every other fish in an aquarium.', q: 'What happens when a cowfish gets stressed?', a: 'It releases a toxin that can kill other fish nearby', wrong: ['Its horns grow longer', 'It changes color to red', 'It inflates like a pufferfish'], category: 'ability' },
+      { text: 'Their body is encased in a bony box made of fused hexagonal plates, like natural armor.', q: 'What protects the cowfish\'s body?', a: 'A bony box of fused hexagonal plates', wrong: ['Thick rubbery skin', 'Poisonous slime', 'Overlapping fish scales'], category: 'body' },
+    ],
+  },
+  'Velvet Ant': {
+    status: 'LC',
+    habitat: 'Sandy dry habitats, deserts, meadows, and forest edges',
+    range: 'Worldwide, especially North America and tropical regions',
+    facts: [
+      { text: 'Velvet ants are not actually ants. They are wasps! The females are wingless and fuzzy, which makes them look like colorful ants.', q: 'What are velvet ants really?', a: 'Wasps with wingless fuzzy females', wrong: ['A type of beetle', 'True ants with venom', 'A type of spider'], category: 'body' },
+      { text: 'Their sting is so painful it earned them the nickname "cow killer," though it cannot actually kill a cow.', q: 'What is the velvet ant\'s nickname?', a: 'Cow killer', wrong: ['Fire ant', 'Death wasp', 'Bullet bug'], category: 'ability' },
+      { text: 'Their exoskeleton is so tough that entomologists have trouble pushing pins through them when preparing specimens for collections.', q: 'How tough is a velvet ant\'s exoskeleton?', a: 'So tough that pins can barely penetrate it', wrong: ['About as tough as a regular ant', 'Soft and flexible like rubber', 'Hard but very brittle'], category: 'body' },
+      { text: 'When grabbed, they make a squeaking sound to warn predators that a very painful sting is coming.', q: 'What warning do velvet ants give before stinging?', a: 'They make a squeaking sound', wrong: ['They release a bad smell', 'They flash bright colors', 'They play dead first'], category: 'behavior' },
+    ],
+  },
+  'Hickory Horned Devil': {
+    status: 'LC',
+    habitat: 'Deciduous forests with hickory, walnut, and sweetgum trees',
+    range: 'Eastern United States',
+    facts: [
+      { text: 'The hickory horned devil is the largest caterpillar in North America, growing up to 6 inches long, about the size of a hot dog.', q: 'How big is the hickory horned devil caterpillar?', a: 'Up to 6 inches, about hot dog-sized', wrong: ['About 1 inch long', 'Up to 12 inches long', 'About 3 inches long'], category: 'size' },
+      { text: 'Despite looking absolutely terrifying with huge curved horns, it is completely harmless and cannot sting or bite.', q: 'Are hickory horned devils dangerous?', a: 'No, they are completely harmless', wrong: ['Yes, their horns are venomous', 'Yes, they spray acid', 'Yes, they deliver a painful bite'], category: 'ability' },
+      { text: 'It transforms into the regal moth, which has a wingspan up to 6 inches and is one of the largest moths in North America.', q: 'What does the hickory horned devil become as an adult?', a: 'The regal moth', wrong: ['The luna moth', 'The atlas moth', 'The cecropia moth'], category: 'body' },
+      { text: 'When ready to pupate, the caterpillar turns turquoise, crawls underground, and spends the entire winter in the soil before emerging as a moth.', q: 'Where does the hickory horned devil pupate?', a: 'Underground in the soil', wrong: ['In a silk cocoon on a branch', 'Inside a rolled-up leaf', 'Under tree bark'], category: 'behavior' },
+    ],
+  },
+  'Antlion': {
+    status: 'LC',
+    habitat: 'Sandy soils in sheltered dry areas',
+    range: 'Worldwide in warm and tropical regions',
+    facts: [
+      { text: 'Antlion larvae dig cone-shaped pit traps in sand and wait buried at the bottom for ants to slide in, like a real-life sarlacc pit.', q: 'How do antlion larvae catch prey?', a: 'They dig cone-shaped pit traps in sand', wrong: ['They spin webs like spiders', 'They chase prey at high speed', 'They use sticky tongues'], category: 'behavior' },
+      { text: 'If an ant tries to climb out of the pit, the antlion flicks sand at it to knock it back down.', q: 'What does an antlion do if prey tries to escape?', a: 'Flicks sand to knock it back down', wrong: ['Jumps out to grab it', 'Spits venom at it', 'Collapses the entire pit'], category: 'ability' },
+      { text: 'Adult antlions look like delicate dragonflies and are harmless. The fierce predator stage is only during their larval period.', q: 'What do adult antlions look like?', a: 'Delicate dragonfly-like insects', wrong: ['Large armored beetles', 'Fuzzy moths', 'Giant ants'], category: 'body' },
+      { text: 'Antlion larvae have no way to get rid of waste, so they store it all in their body until they become adults.', q: 'How do antlion larvae deal with waste?', a: 'Store all waste until they become adults', wrong: ['They excrete it into the sand pit', 'They vomit it up after each meal', 'They absorb it completely'], category: 'body' },
+    ],
+  },
+  'Ironclad Beetle': {
+    status: 'LC',
+    habitat: 'Deciduous forests, often found under bark of dead trees',
+    range: 'Western United States, especially desert regions',
+    facts: [
+      { text: 'The diabolical ironclad beetle can survive being run over by a car. Its exoskeleton interlocks like a jigsaw puzzle, distributing force.', q: 'What can an ironclad beetle survive?', a: 'Being run over by a car', wrong: ['A fall from a skyscraper', 'Being submerged for a month', 'Being frozen in ice'], category: 'ability' },
+      { text: 'Engineers are studying its shell design to build stronger joints for aircraft and other structures.', q: 'Why do engineers study ironclad beetles?', a: 'To design stronger joints for aircraft', wrong: ['To make better car tires', 'To improve bullet-proof vests', 'To build robot legs'], category: 'body' },
+      { text: 'They play dead so convincingly, and their shell is so tough, that entomologists sometimes cannot push a steel pin through them to mount specimens.', q: 'What problem do scientists have with ironclad beetle specimens?', a: 'Pins cannot penetrate their shell', wrong: ['They keep escaping from jars', 'Their color fades quickly', 'They decompose within hours'], category: 'body' },
+    ],
+  },
+  'Glowworm': {
+    status: 'LC',
+    habitat: 'Dark caves and sheltered overhangs near streams',
+    range: 'New Zealand and parts of Australia',
+    facts: [
+      { text: 'New Zealand glowworms create a ceiling of thousands of tiny blue lights in caves that looks like a starry night sky underground.', q: 'What do glowworm-lit caves look like?', a: 'A starry night sky underground', wrong: ['A glowing green fog', 'Flashing disco lights', 'A single bright spotlight'], category: 'ability' },
+      { text: 'They catch prey by dangling sticky silk threads from the ceiling, up to 70 threads at once, like a living curtain of fishing lines.', q: 'How do glowworms catch prey?', a: 'Dangling sticky silk threads from the ceiling', wrong: ['Jumping on passing insects', 'Releasing a sweet scent', 'Using their light to stun insects'], category: 'behavior' },
+      { text: 'Glowworms are not actually worms. They are the larvae of a fungus gnat, a type of fly.', q: 'What are glowworms actually?', a: 'Larvae of a fungus gnat fly', wrong: ['A type of tiny snake', 'A true worm species', 'Baby fireflies'], category: 'body' },
+      { text: 'The hungrier a glowworm is, the brighter it glows, because it is trying harder to attract prey.', q: 'When do glowworms glow brightest?', a: 'When they are hungriest', wrong: ['When they are about to become adults', 'When it is coldest', 'When there is a full moon'], category: 'behavior' },
+    ],
+  },
+  'Thorn Bug': {
+    status: 'LC',
+    habitat: 'Tropical and subtropical trees and shrubs',
+    range: 'Southern United States through Central and South America',
+    facts: [
+      { text: 'Thorn bugs look exactly like plant thorns, so predators walk right past them without noticing.', q: 'How do thorn bugs avoid predators?', a: 'They look exactly like plant thorns', wrong: ['They spray a bad-smelling chemical', 'They jump away at super speed', 'They hide underground during the day'], category: 'body' },
+      { text: 'Mother thorn bugs guard their eggs fiercely, buzzing their wings and kicking at wasps and other predators that come too close.', q: 'How do mother thorn bugs protect their eggs?', a: 'Buzzing wings and kicking at predators', wrong: ['Covering eggs with poison', 'Carrying eggs on their back', 'Building a wall of plant material'], category: 'behavior' },
+      { text: 'They communicate with each other by sending vibrations through the stems of plants, like having a private telephone line.', q: 'How do thorn bugs communicate?', a: 'By sending vibrations through plant stems', wrong: ['By flashing ultraviolet light', 'By releasing pheromones into the air', 'By making clicking sounds with their wings'], category: 'ability' },
+    ],
+  },
+  'Whip Scorpion': {
+    status: 'LC',
+    habitat: 'Tropical and subtropical forests, caves, and leaf litter',
+    range: 'Worldwide in tropical regions, especially Americas and Asia',
+    facts: [
+      { text: 'When threatened, whip scorpions spray a stream of concentrated acetic acid (vinegar) from their tail, earning them the nickname "vinegaroon."', q: 'Why are whip scorpions called vinegaroons?', a: 'They spray vinegar-like acid from their tail', wrong: ['They smell like wine', 'They eat fermented fruit', 'Their body is shaped like a wine bottle'], category: 'ability' },
+      { text: 'Despite their scary appearance, whip scorpions have no venom and no stinger. They are completely harmless to humans.', q: 'Are whip scorpions venomous?', a: 'No, they have no venom or stinger', wrong: ['Yes, extremely venomous', 'Only the males are venomous', 'Yes, but only mildly'], category: 'body' },
+      { text: 'They use their long whip-like tail as an antenna, waving it around to feel their surroundings in the dark.', q: 'What is the whip scorpion\'s tail used for?', a: 'Feeling surroundings like an antenna', wrong: ['Stinging prey', 'Balancing while running', 'Attracting mates'], category: 'body' },
+      { text: 'Whip scorpions are ancient creatures that have existed for over 300 million years, predating the dinosaurs by about 70 million years.', q: 'How long have whip scorpions existed?', a: 'Over 300 million years', wrong: ['About 50 million years', 'About 150 million years', 'About 10 million years'], category: 'lifespan' },
+    ],
+  },
+  'Harlequin Beetle': {
+    status: 'LC',
+    habitat: 'Tropical rainforests on dead and dying trees',
+    range: 'Central and South America',
+    facts: [
+      { text: 'Harlequin beetles have front legs so ridiculously long that their leg span can be wider than their body length, looking like they are wearing stilts.', q: 'What is unusual about harlequin beetle legs?', a: 'Their front legs can be wider than their body length', wrong: ['They have 10 legs instead of 6', 'Their legs are covered in fur', 'Their back legs are used as wings'], category: 'body' },
+      { text: 'Tiny hitchhiking creatures called pseudoscorpions ride on harlequin beetles like passengers on a bus to travel between trees.', q: 'What creatures hitchhike on harlequin beetles?', a: 'Pseudoscorpions', wrong: ['Baby spiders', 'Tiny frogs', 'Mites and ticks'], category: 'behavior' },
+      { text: 'Their bold red, black, and yellow pattern on their wing covers looks like an intricate hand-painted design.', q: 'What colors make up the harlequin beetle\'s pattern?', a: 'Red, black, and yellow', wrong: ['Blue, green, and white', 'Orange and purple', 'Gold and silver'], category: 'body' },
+    ],
+  },
+  'Dobsonfly': {
+    status: 'LC',
+    habitat: 'Near clean fast-flowing rivers and streams',
+    range: 'North America, Central America, and East Asia',
+    facts: [
+      { text: 'Male dobsonflies have mandibles (jaws) up to 1 inch long that look terrifying but are so long they cannot actually bite hard enough to hurt you.', q: 'Can male dobsonflies hurt you with their huge jaws?', a: 'No, their jaws are too long to bite hard', wrong: ['Yes, they deliver a painful bite', 'Yes, the jaws are venomous', 'No, because they have no jaws'], category: 'body' },
+      { text: 'Female dobsonflies have shorter mandibles and can actually deliver a surprisingly painful bite, unlike the males with their showy jaws.', q: 'Which dobsonfly can actually bite harder?', a: 'The female with shorter mandibles', wrong: ['The male with longer mandibles', 'Neither can bite', 'Both bite equally hard'], category: 'ability' },
+      { text: 'Their larvae, called hellgrammites, live underwater for up to 5 years before becoming adults that live only a few days.', q: 'How long do dobsonfly larvae live underwater?', a: 'Up to 5 years', wrong: ['About 2 weeks', 'About 3 months', 'About 1 year'], category: 'lifespan' },
+    ],
+  },
+  'Emerald Cockroach Wasp': {
+    status: 'LC',
+    habitat: 'Tropical regions, often near human dwellings where cockroaches live',
+    range: 'Africa, South Asia, and Pacific Islands',
+    facts: [
+      { text: 'The emerald cockroach wasp turns cockroaches into zombies by stinging them precisely in the brain, removing their willpower to escape.', q: 'How does the emerald cockroach wasp control cockroaches?', a: 'By stinging them precisely in the brain', wrong: ['By biting off their legs', 'By wrapping them in silk', 'By spraying them with paralyzing venom'], category: 'ability' },
+      { text: 'After zombifying a cockroach, the wasp leads it by the antenna like a dog on a leash to a burrow where she lays an egg on it.', q: 'How does the wasp move the zombified cockroach?', a: 'Leads it by the antenna like a leash', wrong: ['Carries it through the air', 'Rolls it along the ground', 'Pushes it from behind'], category: 'behavior' },
+      { text: 'Their metallic emerald green color is one of the most vivid in the insect world, created by layers of thin film in their exoskeleton.', q: 'What creates the wasp\'s vivid green color?', a: 'Layers of thin film in the exoskeleton', wrong: ['Green pigment from their diet', 'Chlorophyll absorbed from plants', 'Fluorescent bacteria on their surface'], category: 'body' },
+    ],
+  },
+  'Giant African Millipede': {
+    status: 'LC',
+    habitat: 'Tropical and subtropical forests in leaf litter and rotting wood',
+    range: 'East Africa, from Mozambique to Kenya',
+    facts: [
+      { text: 'Giant African millipedes can grow up to 15 inches long and are one of the largest millipede species on Earth.', q: 'How long can giant African millipedes grow?', a: 'Up to 15 inches', wrong: ['Up to 5 inches', 'Up to 3 feet', 'Up to 8 inches'], category: 'size' },
+      { text: 'Despite the name millipede meaning "thousand feet," they have around 256 legs, not a thousand.', q: 'How many legs does a giant African millipede actually have?', a: 'Around 256', wrong: ['Exactly 1,000', 'About 50', 'About 100'], category: 'body' },
+      { text: 'When threatened, they curl into a tight spiral and ooze a mild irritant from pores along their sides that stains skin brown.', q: 'What do giant millipedes do when threatened?', a: 'Curl up and ooze a mild irritant', wrong: ['Run away at high speed', 'Bite with venomous fangs', 'Make a loud hissing sound'], category: 'ability' },
+      { text: 'They are champion recyclers, eating dead leaves and rotting wood and turning it into rich soil, like nature\'s composting machines.', q: 'Why are giant millipedes important for forests?', a: 'They turn dead plant material into rich soil', wrong: ['They pollinate flowers', 'They control insect populations', 'They spread seeds to new areas'], category: 'diet' },
+    ],
+  },
+  'Assassin Bug': {
+    status: 'LC',
+    habitat: 'Gardens, forests, grasslands, and human structures',
+    range: 'Worldwide in tropical and temperate regions',
+    facts: [
+      { text: 'Assassin bugs stab prey with a sharp beak and inject enzymes that dissolve the insides, then slurp out the liquefied guts like a smoothie.', q: 'How do assassin bugs eat their prey?', a: 'Inject enzymes to dissolve insides, then slurp them out', wrong: ['Chew them with powerful jaws', 'Swallow prey whole', 'Tear off small pieces to eat'], category: 'diet' },
+      { text: 'Some species stack the dead bodies of their victims on their back as camouflage and as armor against predators.', q: 'What do some assassin bugs do with prey bodies?', a: 'Stack them on their back as camouflage', wrong: ['Bury them to eat later', 'Feed them to their young', 'Use them to build nests'], category: 'behavior' },
+      { text: 'The kissing bug, a type of assassin bug, bites people on the face while they sleep and can spread a serious disease called Chagas disease.', q: 'Where do kissing bugs typically bite humans?', a: 'On the face while sleeping', wrong: ['On the hands while eating', 'On the feet while walking', 'On the arms while gardening'], category: 'behavior' },
+    ],
+  },
+  'Wheel Bug': {
+    status: 'LC',
+    habitat: 'Gardens, forests, and meadows among vegetation',
+    range: 'Eastern United States and parts of Central America',
+    facts: [
+      { text: 'Wheel bugs have a distinctive cogwheel-shaped crest on their back that looks like a gear from a machine, and no one is entirely sure what it is for.', q: 'What is unusual on a wheel bug\'s back?', a: 'A cogwheel-shaped crest', wrong: ['A pair of tiny wings', 'A row of venomous spines', 'A set of fake eyespots'], category: 'body' },
+      { text: 'Their bite is extremely painful, reportedly worse than a bee sting, and the pain can last for hours.', q: 'How painful is a wheel bug bite?', a: 'Worse than a bee sting, lasting hours', wrong: ['Barely noticeable', 'About the same as a mosquito bite', 'Painful for about 2 seconds'], category: 'ability' },
+      { text: 'They are beneficial garden predators that eat pest insects like stink bugs, caterpillars, and Japanese beetles.', q: 'Why are wheel bugs good for gardens?', a: 'They eat pest insects', wrong: ['They pollinate flowers', 'They aerate the soil', 'They repel deer and rabbits'], category: 'diet' },
+    ],
+  },
+  'Flannel Moth Caterpillar': {
+    status: 'LC',
+    habitat: 'Deciduous forests, gardens, and parks on shade trees',
+    range: 'Eastern and southern United States, Central America',
+    facts: [
+      { text: 'The flannel moth caterpillar looks like a tiny fluffy toupee or a furry cat toy, but touching it causes searing pain because venomous spines hide under the fur.', q: 'What is hidden under the flannel moth caterpillar\'s fur?', a: 'Venomous spines', wrong: ['Tiny suction cups', 'Harmless soft bristles', 'Sticky glue threads'], category: 'ability' },
+      { text: 'Its sting is considered one of the most painful of any insect in North America, sometimes sending people to the hospital.', q: 'How bad is the flannel moth caterpillar\'s sting?', a: 'One of the most painful in North America', wrong: ['Completely painless', 'About as bad as a mosquito bite', 'Mildly itchy for a few minutes'], category: 'ability' },
+      { text: 'The venomous spines break off in your skin and are so small they are almost impossible to remove without special tape.', q: 'Why are flannel moth caterpillar stings hard to treat?', a: 'Tiny spines break off in skin and are hard to remove', wrong: ['The venom has no antidote', 'The sting area swells too large', 'The caterpillar keeps stinging repeatedly'], category: 'body' },
+    ],
+  },
+  'Io Moth': {
+    status: 'LC',
+    habitat: 'Deciduous forests, gardens, parks, and suburban areas',
+    range: 'Eastern North America, from Canada to Florida',
+    facts: [
+      { text: 'Io moths have giant eyespots on their hindwings that they flash suddenly to startle predators, making the moth look like a much larger animal face.', q: 'Why do io moths have eyespots on their wings?', a: 'To startle predators by looking like a bigger animal', wrong: ['To attract mates', 'To see in the dark', 'To absorb sunlight for warmth'], category: 'ability' },
+      { text: 'The caterpillars are covered in clusters of green venomous spines that deliver a sting compared to a bee sting on contact.', q: 'What makes io moth caterpillars dangerous to touch?', a: 'Clusters of green venomous spines', wrong: ['Acidic slime on their skin', 'Sharp biting mouthparts', 'Tiny barbed hairs that cause rashes'], category: 'body' },
+      { text: 'Males are bright yellow and females are reddish-brown, making them look like completely different species.', q: 'How do male and female io moths look different?', a: 'Males are yellow, females are reddish-brown', wrong: ['Males have spots, females do not', 'Females are twice as large', 'Males have long tail streamers'], category: 'body' },
+      { text: 'Adult io moths have no working mouthparts and cannot eat. They live off stored energy from their caterpillar stage for their entire adult lives.', q: 'Why can\'t adult io moths eat?', a: 'They have no working mouthparts', wrong: ['Their stomachs dissolve after metamorphosis', 'Their proboscis is sealed shut', 'They are too busy mating to eat'], category: 'diet' },
+    ],
+  },
+
 }

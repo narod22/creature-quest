@@ -4,6 +4,7 @@ import { useApp } from '../context'
 import { getSpeciesDetails } from '../api/wikipedia'
 import { getSpeciesPhotos } from '../api/inaturalist'
 import { generateKidFacts, generateQuizQuestions, hasCuratedFacts } from '../api/quiz'
+import { SPECIES_DATA, STATUS_LABELS } from '../api/species-data'
 import QuizCard from '../components/QuizCard'
 
 export default function AnimalDetailPage() {
@@ -98,6 +99,10 @@ export default function AnimalDetailPage() {
     .filter((p) => p.trim().length > 20)
     .slice(0, isLittle ? 2 : 6)
 
+  // Get enriched data from our curated database
+  const speciesInfo = SPECIES_DATA[details.title]
+  const statusInfo = speciesInfo?.status ? STATUS_LABELS[speciesInfo.status] : null
+
   const tabs = [
     { id: 'about', label: '📖 About', emoji: '📖' },
     { id: 'facts', label: '⭐ Fun Facts', emoji: '⭐' },
@@ -137,6 +142,35 @@ export default function AnimalDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Species Info Bar */}
+        {speciesInfo && (
+          <div className="px-6 py-3 bg-gray-50 border-b-2 border-gray-100 flex flex-wrap gap-3 items-center">
+            {statusInfo && (
+              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold ${
+                speciesInfo.status === 'LC' ? 'bg-green-100 text-green-700' :
+                speciesInfo.status === 'NT' ? 'bg-yellow-100 text-yellow-700' :
+                speciesInfo.status === 'VU' ? 'bg-orange-100 text-orange-700' :
+                speciesInfo.status === 'EN' ? 'bg-red-100 text-red-700' :
+                speciesInfo.status === 'CR' ? 'bg-red-200 text-red-800' :
+                speciesInfo.status === 'EW' || speciesInfo.status === 'EX' ? 'bg-gray-800 text-white' :
+                'bg-gray-100 text-gray-600'
+              }`}>
+                {statusInfo.emoji} {statusInfo.label}
+              </span>
+            )}
+            {speciesInfo.habitat && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-jungle-light/20 text-jungle">
+                🌍 {speciesInfo.habitat}
+              </span>
+            )}
+            {speciesInfo.range && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold bg-ocean-light/20 text-ocean">
+                📍 {speciesInfo.range}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex border-b-2 border-gray-100 overflow-x-auto">

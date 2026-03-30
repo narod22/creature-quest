@@ -1,7 +1,15 @@
 // Quiz question generator for species data
 // Uses curated fun facts when available, falls back to Wikipedia text extraction
 import { TYPE_LABEL, TYPE_EMOJI, shuffleArray } from './helpers'
-import { SPECIES_FACTS } from './species-facts'
+import { SPECIES_DATA } from './species-data'
+
+// Build flat SPECIES_FACTS lookup from SPECIES_DATA for backward compatibility
+const SPECIES_FACTS = {}
+for (const [name, data] of Object.entries(SPECIES_DATA)) {
+  if (data.facts && data.facts.length > 0) {
+    SPECIES_FACTS[name] = data.facts
+  }
+}
 
 const ALL_TYPES = Object.keys(TYPE_LABEL).filter((t) => t !== 'unknown')
 
